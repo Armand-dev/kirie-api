@@ -19,6 +19,8 @@ Route::middleware('throttle:60,1')->group(function() {
 });
 
 Route::middleware('auth:sanctum')->group(function() {
+    Route::apiResource('/property', \App\Http\Controllers\PropertyController::class);
+
     Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
