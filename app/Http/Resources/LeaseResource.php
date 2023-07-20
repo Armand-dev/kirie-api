@@ -16,6 +16,7 @@ class LeaseResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'number' => $this->number,
             'body' => $this->body,
             'signature_type' => $this->signature_type,

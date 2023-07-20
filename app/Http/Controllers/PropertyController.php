@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePropertyRequest;
-use App\Http\Requests\UpdatePropertyRequest;
+use App\DataTransferObjects\PropertyDTO;
+use App\Http\Requests\PropertyRequest;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
+use App\Services\PropertyService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PropertyController extends Controller
 {
+
+    public function __construct(
+        protected PropertyService $service
+    ){}
+
     /**
      * Display a listing of the resource.
      */
@@ -26,19 +30,9 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePropertyRequest $request): JsonResponse
+    public function store(PropertyRequest $request): JsonResponse
     {
-        $property = auth()->user()->properties()->create($request->only([
-            'name',
-            'type',
-            'cost_of_acquisition',
-            'rooms',
-            'area',
-            'parking',
-            'street',
-            'street_number',
-            'address',
-        ]));
+        $property = $this->service->store(PropertyDTO::fromApiRequest($request));
 
         return response()->json([
             'success' => true,
@@ -60,19 +54,9 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePropertyRequest $request, Property $property): JsonResponse
+    public function update(PropertyRequest $request, Property $property): JsonResponse
     {
-        $property->update($request->only([
-            'name',
-            'type',
-            'cost_of_acquisition',
-            'rooms',
-            'area',
-            'parking',
-            'street',
-            'street_number',
-            'address',
-        ]));
+        $property = $this->service->update($property, PropertyDTO::fromApiRequest($request));
 
         return response()->json([
             'success' => true,

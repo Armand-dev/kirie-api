@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PropertyType;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Enum;
 
-class UpdateLeaseTemplateRequest extends FormRequest
+class PropertyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +26,16 @@ class UpdateLeaseTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255'],
-            'body' => ['string'],
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', new Enum(PropertyType::class)],
+            'cost_of_acquisition' => ['numeric','min:0'],
+            'rooms' => ['numeric','min:0'],
+            'baths' => ['numeric','min:0'],
+            'parking' => ['numeric','min:0'],
+            'area' => ['numeric','min:0'],
+            'street' => ['required', 'string'],
+            'street_number' => ['required', 'string'],
+            'address' => ['string'],
         ];
     }
 

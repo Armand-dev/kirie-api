@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\LeaseTemplateGlobal;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,7 @@ class LeaseTemplate extends Model
     ];
 
     protected $casts = [
-        'global' => 'boolean'
+        'global' => LeaseTemplateGlobal::class
     ];
 
     public function user(): BelongsTo

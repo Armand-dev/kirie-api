@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\LeaseStatus;
+use App\Enums\SignatureType;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules\Enum;
 
-class StoreLeaseRequest extends FormRequest
+class LeaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +29,8 @@ class StoreLeaseRequest extends FormRequest
         return [
             'number' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string'],
-            'signature_type' => ['required','string','in:manual,digital'],
-            'status' => ['required','string','in:active,inactive,pending_signature,pending_commencement,canceled'],
+            'signature_type' => ['required','string', new Enum(SignatureType::class)],
+            'status' => ['required','string', new Enum(LeaseStatus::class)],
             'start_date' => ['required','date'],
             'end_date' => ['required','date', 'after_or_equal:start_date'],
             'duration' => ['required','numeric', 'min:0'],
