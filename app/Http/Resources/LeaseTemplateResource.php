@@ -18,7 +18,8 @@ class LeaseTemplateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'body' => $this->body
+            'body' => $this->body,
+            'global' => $this->global
         ];
     }
 }
