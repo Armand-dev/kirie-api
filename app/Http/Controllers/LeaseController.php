@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LeaseCreatedEvent;
 use App\Http\Requests\StoreLeaseRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Http\Resources\LeaseResource;
-use App\Http\Resources\PropertyResource;
 use App\Models\Lease;
-use App\Models\Property;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class LeaseController extends Controller
 {
@@ -43,6 +41,8 @@ class LeaseController extends Controller
             'due_day',
             'property_id'
         ]));
+
+        event(new LeaseCreatedEvent($lease));
 
         return response()->json([
             'success' => true,
