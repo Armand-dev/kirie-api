@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePropertyRequest;
+use App\Http\Requests\PropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
@@ -26,7 +26,7 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePropertyRequest $request): JsonResponse
+    public function store(PropertyRequest $request): JsonResponse
     {
         $property = auth()->user()->properties()->create($request->only([
             'name',

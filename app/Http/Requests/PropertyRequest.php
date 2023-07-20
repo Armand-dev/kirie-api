@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateLeaseTemplateRequest extends FormRequest
+class PropertyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,13 @@ class UpdateLeaseTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255'],
-            'body' => ['string'],
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'in:apartment,villa'],
+            'cost_of_acquisition' => ['numeric','min:0'],
+            'rooms' => ['numeric','min:0'],
+            'baths' => ['numeric','min:0'],
+            'parking' => ['numeric','min:0'],
+            'area' => ['numeric','min:0'],
         ];
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreLeaseTemplateRequest;
+use App\Http\Requests\LeaseTemplateRequest;
 use App\Http\Requests\UpdateLeaseTemplateRequest;
 use App\Http\Resources\LeaseTemplateResource;
 use App\Http\Resources\PropertyResource;
@@ -28,7 +28,7 @@ class LeaseTemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLeaseTemplateRequest $request)
+    public function store(LeaseTemplateRequest $request)
     {
         $leaseTemplate = auth()->user()->leaseTemplates()->create([
             ...$request->only([

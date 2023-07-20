@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObjects\LeaseDTO;
 use App\Events\LeaseCreatedEvent;
-use App\Http\Requests\StoreLeaseRequest;
-use App\Http\Requests\UpdatePropertyRequest;
+use App\Http\Requests\LeaseRequest;
 use App\Http\Resources\LeaseResource;
 use App\Models\Lease;
+use App\Services\LeaseService;
 use Illuminate\Http\JsonResponse;
 
 class LeaseController extends Controller
 {
+
+    public function __construct(
+        protected LeaseService $service
+    ){}
+
     /**
      * Display a listing of the resource.
      */
@@ -25,22 +31,9 @@ class LeaseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLeaseRequest $request)
+    public function store(LeaseRequest $request)
     {
-        $lease = auth()->user()->leases()->create($request->only([
-            'number',
-            'body',
-            'signature_type',
-            'status',
-            'start_date',
-            'end_date',
-            'duration',
-            'rent_amount',
-            'additional_people',
-            'deposit',
-            'due_day',
-            'property_id'
-        ]));
+        $lease = $this->service->store(LeaseDTO::fromApiRequest($request));
 
         event(new LeaseCreatedEvent($lease));
 
@@ -64,21 +57,9 @@ class LeaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePropertyRequest $request, Lease $lease): JsonResponse
+    public function update(LeaseRequest $request, Lease $lease): JsonResponse
     {
-        $lease->update($request->only([
-            'number',
-            'body',
-            'signature_type',
-            'status',
-            'start_date',
-            'end_date',
-            'duration',
-            'rent_amount',
-            'additional_people',
-            'deposit',
-            'due_day',
-        ]));
+        $lease = $this->service->update($lease, LeaseDTO::fromApiRequest($request));
 
         return response()->json([
             'success' => true,
