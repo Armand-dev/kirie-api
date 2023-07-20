@@ -15,12 +15,14 @@ class LeaseTemplateSeeder extends Seeder
     {
         $body =
             '
-                <p>Paragraph 1</p>
+                <p>Dear mister :user_name:</p>
 
-                <p>Paragraph 2</p>
+                <p>Property name is :property_name:</p>
 
                 <p>Paragraph 3</p>
             ';
+
+
         LeaseTemplate::create([
             'name' => 'Contract standard de închiriere',
             'body' => $body,
