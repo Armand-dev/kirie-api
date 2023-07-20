@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lease::class);
     }
+
+    public function leaseTemplates(): HasMany
+    {
+        return $this->hasMany(LeaseTemplate::class);
+    }
 }
