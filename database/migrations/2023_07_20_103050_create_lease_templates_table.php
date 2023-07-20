@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('body');
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->boolean('global')->default(false);
+            $table->foreignIdFor(\App\Models\User::class)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

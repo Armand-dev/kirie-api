@@ -17,9 +17,11 @@ class LeaseTemplateController extends Controller
      */
     public function index(): JsonResponse
     {
+        $leaseTemplates = auth()->user()->leaseTemplates
+            ->merge(LeaseTemplate::global()->get());
         return response()->json([
             'success' => true,
-            'data' => LeaseTemplateResource::collection(auth()->user()->leaseTemplates)
+            'data' => LeaseTemplateResource::collection($leaseTemplates)
         ]);
     }
 
@@ -28,10 +30,13 @@ class LeaseTemplateController extends Controller
      */
     public function store(StoreLeaseTemplateRequest $request)
     {
-        $leaseTemplate = auth()->user()->leaseTemplates()->create($request->only([
-            'name',
-            'body'
-        ]));
+        $leaseTemplate = auth()->user()->leaseTemplates()->create([
+            ...$request->only([
+                'name',
+                'body'
+            ]),
+            'global' => false
+        ]);
 
         return response()->json([
             'success' => true,
