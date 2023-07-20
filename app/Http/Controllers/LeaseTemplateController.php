@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\DataTransferObjects\LeaseTemplateDTO;
 use App\Http\Requests\LeaseTemplateRequest;
-use App\Http\Requests\UpdateLeaseTemplateRequest;
 use App\Http\Resources\LeaseTemplateResource;
 use App\Models\LeaseTemplate;
 use App\Services\LeaseTemplateService;
