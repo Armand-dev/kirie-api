@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObjects\LeaseTemplateDTO;
 use App\Http\Requests\LeaseTemplateRequest;
 use App\Http\Requests\UpdateLeaseTemplateRequest;
 use App\Http\Resources\LeaseTemplateResource;
-use App\Http\Resources\PropertyResource;
 use App\Models\LeaseTemplate;
+use App\Services\LeaseTemplateService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class LeaseTemplateController extends Controller
 {
+    public function __construct(
+        protected LeaseTemplateService $service
+    ){}
+
     /**
      * Display a listing of the resource.
      */
@@ -30,13 +34,7 @@ class LeaseTemplateController extends Controller
      */
     public function store(LeaseTemplateRequest $request)
     {
-        $leaseTemplate = auth()->user()->leaseTemplates()->create([
-            ...$request->only([
-                'name',
-                'body'
-            ]),
-            'global' => false
-        ]);
+        $leaseTemplate = $this->service->store(LeaseTemplateDTO::fromApiRequest($request));
 
         return response()->json([
             'success' => true,
@@ -58,12 +56,9 @@ class LeaseTemplateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLeaseTemplateRequest $request, LeaseTemplate $leaseTemplate)
+    public function update(LeaseTemplateRequest $request, LeaseTemplate $leaseTemplate)
     {
-        $leaseTemplate->update($request->only([
-            'name',
-            'body',
-        ]));
+        $leaseTemplate = $this->service->update($leaseTemplate, LeaseTemplateDTO::fromApiRequest($request));
 
         return response()->json([
             'success' => true,
