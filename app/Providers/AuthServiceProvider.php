@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Lease;
 use App\Models\Property;
+use App\Policies\LeasePolicy;
 use App\Policies\PropertyPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Property::class => PropertyPolicy::class
+        Property::class => PropertyPolicy::class,
+        Lease::class => LeasePolicy::class,
     ];
 
     /**
