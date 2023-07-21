@@ -13,7 +13,9 @@ class LeaseTemplateController extends Controller
 {
     public function __construct(
         protected LeaseTemplateService $service
-    ){}
+    ){
+        $this->authorizeResource(LeaseTemplate::class, 'lease_template');
+    }
 
     /**
      * Display a listing of the resource.

@@ -15,7 +15,9 @@ class LeaseController extends Controller
 
     public function __construct(
         protected LeaseService $service
-    ){}
+    ){
+        $this->authorizeResource(Lease::class, 'lease');
+    }
 
     /**
      * Display a listing of the resource.
