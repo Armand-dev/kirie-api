@@ -14,7 +14,9 @@ class PropertyController extends Controller
 
     public function __construct(
         protected PropertyService $service
-    ){}
+    ){
+        $this->authorizeResource(Property::class, 'property');
+    }
 
     /**
      * Display a listing of the resource.
