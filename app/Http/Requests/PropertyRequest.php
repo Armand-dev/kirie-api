@@ -33,9 +33,9 @@ class PropertyRequest extends FormRequest
             'baths' => ['numeric','min:0'],
             'parking' => ['numeric','min:0'],
             'area' => ['numeric','min:0'],
-            'street' => ['required', 'string'],
-            'street_number' => ['required', 'string'],
-            'address' => ['string'],
+            'address.street' => ['required', 'string'],
+            'address.street_number' => ['required', 'string'],
+            'address.address' => ['string'],
         ];
     }
 
