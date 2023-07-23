@@ -25,7 +25,7 @@ class PropertyController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => PropertyResource::collection(auth()->user()->properties)
+            'data' => PropertyResource::collection(auth()->user()->properties->load('activeLease'))
         ]);
     }
 

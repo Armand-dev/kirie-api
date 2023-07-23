@@ -26,7 +26,7 @@ class PropertyResource extends JsonResource
                 'street' => $this->street,
                 'street_number' => $this->street_number,
                 'address' => $this->address,
-            ]
+            ],
         ];
     }
 }
