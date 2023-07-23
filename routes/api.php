@@ -17,6 +17,7 @@ Route::prefix('v1')->group(function() {
     Route::middleware('throttle:60,1')->group(function() {
         Route::post('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register');
         Route::post('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('login');
+        Route::post('/verify_token', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'verifyToken'])->name('verify-token');
     });
 
     Route::middleware('auth:sanctum')->group(function() {

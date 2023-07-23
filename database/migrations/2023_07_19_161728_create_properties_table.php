@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('cost_of_acquisition')->nullable();
             $table->integer('rooms')->nullable();
+            $table->integer('baths')->nullable();
             $table->decimal('area',6,2)->nullable();
             $table->integer('parking')->nullable();
 

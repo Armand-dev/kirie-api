@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\LeaseStatus;
 use App\Enums\PropertyType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,10 @@ class Property extends Model
     public function leases(): HasMany
     {
         return $this->hasMany(Lease::class);
+    }
+
+    public function activeLease(): HasMany
+    {
+        return $this->hasMany(Lease::class)->where('status', LeaseStatus::Active);
     }
 }

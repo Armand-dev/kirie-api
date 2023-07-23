@@ -29,9 +29,9 @@ class PropertyDTO
             baths: $request->validated('baths'),
             area: $request->validated('area'),
             parking: $request->validated('parking'),
-            street: $request->validated('street'),
-            street_number: $request->validated('street_number'),
-            address: $request->validated('address'),
+            street: $request->validated('address.street'),
+            street_number: $request->validated('address.street_number'),
+            address: $request->validated('address.address'),
         );
     }
 }

@@ -21,12 +21,13 @@ class PropertyResource extends JsonResource
             'cost_of_acquisition' => $this->cost_of_acquisition,
             'rooms' => $this->rooms,
             'area' => $this->area,
+            'baths' => $this->baths,
             'parking' => $this->parking,
             'address' => [
                 'street' => $this->street,
                 'street_number' => $this->street_number,
                 'address' => $this->address,
-            ]
+            ],
         ];
     }
 }

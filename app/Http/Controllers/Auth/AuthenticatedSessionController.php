@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -25,7 +26,9 @@ class AuthenticatedSessionController extends Controller
         if (! Auth::attempt($request->only('email', 'password'))) {
             throw new HttpResponseException(response()->json([
                 'success' => false,
-                'errors' => 'Credentials do not match our records!'
+                'errors' => [
+                    'Credentials do not match our records!'
+                ]
             ], 403));
         }
 
@@ -34,6 +37,30 @@ class AuthenticatedSessionController extends Controller
             'data' => [
                 'user' => new UserResource(\auth()->user()),
                 'access_token' => \auth()->user()->createToken('access-token')
+            ]
+        ]);
+    }
+
+    /**
+     * Handle an incoming token verification request.
+     */
+    public function verifyToken(Request $request): JsonResponse
+    {
+        $request->validate([
+            'api_token' => ['required']
+        ]);
+
+        $accessToken = PersonalAccessToken::findToken($request->get('api_token'));
+        $user = $accessToken->tokenable;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'user' => new UserResource($user),
+                'access_token' => [
+                    'accessToken' => $accessToken->toArray(),
+                    'plainTextToken' => $request->get('api_token')
+                ]
             ]
         ]);
     }
