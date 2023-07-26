@@ -18,7 +18,8 @@ class LeaseDTO
         public readonly int $additional_people,
         public readonly float $deposit,
         public readonly int $due_day,
-        public readonly int $property_id
+        public readonly int $property_id,
+        public readonly ?int $tenant_id,
     ){}
 
     public static function fromApiRequest(LeaseRequest $request): LeaseDTO
@@ -35,7 +36,8 @@ class LeaseDTO
             additional_people: $request->validated('additional_people'),
             deposit: $request->validated('deposit'),
             due_day: $request->validated('due_day'),
-            property_id: $request->validated('property_id')
+            property_id: $request->validated('property_id'),
+            tenant_id: $request->validated('tenant_id'),
         );
     }
 }

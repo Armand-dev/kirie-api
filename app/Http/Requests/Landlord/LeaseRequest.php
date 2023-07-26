@@ -38,7 +38,8 @@ class LeaseRequest extends FormRequest
             'additional_people' => ['numeric', 'min:0'],
             'deposit' => ['required', 'numeric', 'min:0'],
             'due_day' => ['required', 'numeric', 'min:1', 'max:31'],
-            'property_id' => ['required', 'numeric', 'min:1', 'max:31', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
+            'property_id' => ['required', 'numeric', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
+            'tenant_id' => ['numeric', 'exists:App\Models\Landlord\Tenant,id,deleted_at,NULL'],
         ];
     }
 

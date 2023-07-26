@@ -23,6 +23,7 @@ class LeaseService
             'deposit' => $leaseDTO->deposit,
             'due_day' => $leaseDTO->due_day,
             'property_id' => $leaseDTO->property_id,
+            'tenant_id' => $leaseDTO->tenant_id,
         ]);
     }
 
@@ -41,6 +42,7 @@ class LeaseService
             'deposit' => $leaseDTO->deposit,
             'due_day' => $leaseDTO->due_day,
             'property_id' => $leaseDTO->property_id,
+            'tenant_id' => $leaseDTO->tenant_id,
         ]);
 
     }

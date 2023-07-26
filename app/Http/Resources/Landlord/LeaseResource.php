@@ -30,6 +30,7 @@ class LeaseResource extends JsonResource
             'due_day' => $this->due_day,
             'property' => new PropertyResource($this->whenLoaded('property')),
             'user' => new UserResource($this->whenLoaded('user')),
+            'tenant' => new UserResource($this->whenLoaded('tenant')),
         ];
     }
 }

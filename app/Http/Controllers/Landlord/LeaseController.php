@@ -42,7 +42,7 @@ class LeaseController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => new LeaseResource($lease->load('property'))
+            'data' => new LeaseResource($lease->load('property', 'user', 'tenant'))
         ]);
     }
 
@@ -53,7 +53,7 @@ class LeaseController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => new LeaseResource($lease->load('property', 'user'))
+            'data' => new LeaseResource($lease->load('property', 'user', 'tenant'))
         ]);
     }
 
@@ -66,7 +66,7 @@ class LeaseController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => new LeaseResource($lease->load('property', 'user'))
+            'data' => new LeaseResource($lease->load('property', 'user', 'tenant'))
         ]);
     }
 
