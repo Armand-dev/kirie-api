@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\LeaseTemplate;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Landlord\LeaseTemplate;
 use Illuminate\Database\Seeder;
 
 class LeaseTemplateSeeder extends Seeder

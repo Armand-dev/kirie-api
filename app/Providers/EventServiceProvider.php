@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Events\LeaseCreatedEvent;
-use App\Listeners\GenerateLeasePDFListener;
+use App\Events\Landlord\LeaseCreatedEvent;
+use App\Listeners\Landlord\GenerateLeasePDFListener;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {

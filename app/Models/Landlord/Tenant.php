@@ -1,25 +1,21 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Landlord;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Traits\Landlord\HasLeases;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class Tenant extends Model
 {
-    use HasApiTokens,
-        HasFactory,
-        Notifiable,
-        SoftDeletes,
-        HasRoles,
-        HasLeases;
+    use HasFactory;
+
+    /**
+     * @var string $table
+     */
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -49,4 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function landlords(): belongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_tenant', 'tenant_id', 'user_id');
+    }
+
 }

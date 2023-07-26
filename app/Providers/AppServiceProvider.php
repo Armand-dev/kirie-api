@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\LeaseService;
-use App\Services\LeaseTemplateService;
-use App\Services\PropertyService;
+use App\Services\Landlord\LeaseService;
+use App\Services\Landlord\LeaseTemplateService;
+use App\Services\Landlord\PropertyService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

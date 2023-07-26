@@ -5,15 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\LogoutRequest;
-use App\Http\Resources\UserResource;
-use App\Providers\RouteServiceProvider;
+use App\Http\Resources\Landlord\UserResource;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthenticatedSessionController extends Controller
