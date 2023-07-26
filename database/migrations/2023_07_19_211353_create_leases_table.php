@@ -25,8 +25,8 @@ return new class extends Migration
             $table->decimal('deposit', 8, 2)->nullable();
             $table->integer('due_day',)->nullable();
             $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\Property::class);
-            $table->foreignIdFor(\App\Models\Tenant::class)->nullable();
+            $table->foreignIdFor(\App\Models\Landlord\Property::class);
+            $table->foreignIdFor(\App\Models\Landlord\Tenant::class)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

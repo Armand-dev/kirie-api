@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +20,13 @@ Route::prefix('v1')->group(function() {
     });
 
     Route::middleware('auth:sanctum')->group(function() {
-        Route::apiResource('/property', \App\Http\Controllers\PropertyController::class);
-        Route::apiResource('/lease', \App\Http\Controllers\LeaseController::class);
-        Route::apiResource('/lease-template', \App\Http\Controllers\LeaseTemplateController::class);
+        Route::middleware('role:landlord')->group(function() {
+            Route::apiResource('/property', \App\Http\Controllers\Landlord\PropertyController::class);
+            Route::apiResource('/lease', \App\Http\Controllers\Landlord\LeaseController::class);
+            Route::apiResource('/lease-template', \App\Http\Controllers\Landlord\LeaseTemplateController::class);
+            Route::apiResource('/tenant', \App\Http\Controllers\Landlord\TenantController::class);
+            Route::post('/tenant/attach/{tenant}', [\App\Http\Controllers\Landlord\TenantController::class, 'attachTenant']);
+        });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
     });
