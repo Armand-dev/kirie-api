@@ -30,6 +30,12 @@ class LeasePolicy
     public function create(User $user): bool
     {
         $property = Property::findOrFail(request()->get('property_id'));
+        $tenant = User::find(request()->get('tenant_id'));
+
+        if (isset($tenant) && !$tenant->hasRole('tenant')) {
+            return false;
+        }
+
         return $property->user_id == $user->id;
     }
 
@@ -39,6 +45,12 @@ class LeasePolicy
     public function update(User $user, Lease $lease): bool
     {
         $property = Property::findOrFail(request()->get('property_id'));
+        $tenant = User::find(request()->get('tenant_id'));
+
+        if (isset($tenant) && !$tenant->hasRole('tenant')) {
+            return false;
+        }
+
         return $user->id == $lease->user_id && $property->user_id == $user->id;
     }
 
