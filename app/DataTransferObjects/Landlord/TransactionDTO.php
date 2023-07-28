@@ -13,6 +13,7 @@ class TransactionDTO
         public readonly string $description,
         public readonly float $total,
         public readonly string $status,
+        public readonly int $user_id,
         public readonly ?int $lease_id,
     ){}
 
@@ -24,6 +25,7 @@ class TransactionDTO
             description: $request->validated('description'),
             total: $request->validated('total'),
             status: TransactionStatus::Paid->value,
+            user_id: auth()->user()->id,
             lease_id: $request->validated('lease_id'),
         );
     }

@@ -9,12 +9,14 @@ class TransactionService
 {
     public function store(TransactionDTO $transactionDTO)
     {
-        return auth()->user()->transactions()->create([
+        return Transaction::create([
             'type' => $transactionDTO->type,
             'date' => $transactionDTO->date,
             'description' => $transactionDTO->description,
             'total' => $transactionDTO->total,
+            'status' => $transactionDTO->status,
             'lease_id' => $transactionDTO->lease_id,
+            'user_id' => $transactionDTO->user_id,
         ]);
     }
 
