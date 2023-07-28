@@ -7,6 +7,7 @@ use App\Enums\Landlord\SignatureType;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Traits\Landlord\GeneratesPDF;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,5 +47,10 @@ class Lease extends Model
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('status', LeaseStatus::Active->value);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Landlord\TransactionStatus;
 use App\Enums\Landlord\TransactionType;
 use App\Models\Landlord\Lease;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +21,8 @@ class Transaction extends Model
 
     protected $casts = [
         'date' => 'date',
-        'type' => TransactionType::class
+        'type' => TransactionType::class,
+        'status' => TransactionStatus::class,
     ];
 
     public function user(): BelongsTo

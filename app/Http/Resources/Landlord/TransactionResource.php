@@ -20,6 +20,7 @@ class TransactionResource extends JsonResource
             'date' => $this->date,
             'description' => $this->description,
             'total' => $this->total,
+            'status' => $this->status,
 
             'lease' => new LeaseResource($this->whenLoaded('lease')),
             'user' => new UserResource($this->whenLoaded('user')),

@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects\Landlord;
 
+use App\Enums\Landlord\TransactionStatus;
 use App\Http\Requests\Landlord\TransactionRequest;
 
 class TransactionDTO
@@ -11,6 +12,7 @@ class TransactionDTO
         public readonly string $date,
         public readonly string $description,
         public readonly float $total,
+        public readonly string $status,
         public readonly ?int $lease_id,
     ){}
 
@@ -21,6 +23,7 @@ class TransactionDTO
             date: $request->validated('date'),
             description: $request->validated('description'),
             total: $request->validated('total'),
+            status: TransactionStatus::Paid->value,
             lease_id: $request->validated('lease_id'),
         );
     }

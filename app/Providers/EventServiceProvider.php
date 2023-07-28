@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\Landlord\LeaseCreatedEvent;
+use App\Events\RentTransactionCreatedEvent;
 use App\Listeners\Landlord\GenerateLeasePDFListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,7 +21,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         LeaseCreatedEvent::class => [
             GenerateLeasePDFListener::class
-        ]
+        ],
+        RentTransactionCreatedEvent::class => [
+            // TODO: generate receipt
+            // TODO: send notif, etc
+        ],
     ];
 
     /**
