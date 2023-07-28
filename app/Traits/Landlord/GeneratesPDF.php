@@ -8,7 +8,7 @@ trait GeneratesPDF
     {
         return $this->body;
     }
-x
+
     public function getPDFFilepath(): string
     {
         return now() . '_contract.pdf';

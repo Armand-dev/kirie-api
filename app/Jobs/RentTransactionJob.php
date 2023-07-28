@@ -33,7 +33,7 @@ class RentTransactionJob implements ShouldQueue
     public function handle(TransactionService $service): void
     {
         Lease::active()->each(function ($lease) use ($service) {
-            if ($lease->due_day != today()) {
+            if ($lease->due_day != today()->day) {
                 return true; // continue
             }
 
@@ -43,6 +43,7 @@ class RentTransactionJob implements ShouldQueue
                 description: 'Rent for ' . today()->monthName . ' ' . today()->year,
                 total: $lease->rent_amount,
                 status: TransactionStatus::Unpaid->value,
+                user_id: $lease->user_id,
                 lease_id: $lease->id
             );
 
