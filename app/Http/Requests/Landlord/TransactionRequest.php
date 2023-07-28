@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Landlord;
 
-use App\Models\User;
+use App\Enums\Landlord\TransactionType;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rules\Enum;
 
-class TenantRequest extends FormRequest
+class TransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,13 @@ class TenantRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+        return [
+            'type' => ['required', 'string', new Enum(TransactionType::class)],
+            'date' => ['required', 'date'],
+            'description' => ['required', 'string', 'max: 20000'],
+            'total' => ['required', 'numeric','min:0'],
+            'lease_id' => ['numeric', 'exists:App\Models\Landlord\Lease,id,deleted_at,NULL'],
         ];
-
-        if (request()->route()->getActionMethod() == 'store') {
-            $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:'.User::class];
-        }
-
-        return $rules;
     }
 
     protected function failedValidation(Validator $validator)

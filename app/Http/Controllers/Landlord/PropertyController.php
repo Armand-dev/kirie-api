@@ -70,7 +70,7 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Property $property)
+    public function destroy(Property $property): JsonResponse
     {
         $property->delete();
 
