@@ -54,7 +54,9 @@ class LeaseService
 
         Pdf::loadHTML($lease->convertBody())->save($filePath);
 
-        // TODO: save the url on $lease
+        $lease->update([
+           'file_url' => $filePath
+        ]);
 
         event(new LeaseGeneratedSuccessfullyEvent($lease));
 

@@ -28,6 +28,8 @@ class LeaseResource extends JsonResource
             'additional_people' => $this->additional_people,
             'deposit' => $this->deposit,
             'due_day' => $this->due_day,
+            'file_url' => $this->file_url,
+
             'property' => new PropertyResource($this->whenLoaded('property')),
             'user' => new UserResource($this->whenLoaded('user')),
             'tenant' => new UserResource($this->whenLoaded('tenant')),
