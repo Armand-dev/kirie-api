@@ -3,6 +3,7 @@
 namespace App\Services\Landlord;
 
 use App\DataTransferObjects\Landlord\LeaseDTO;
+use App\Events\LeaseGeneratedSuccessfullyEvent;
 use App\Models\Landlord\Lease;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -52,6 +53,10 @@ class LeaseService
         $filePath = $lease->getPDFFilepath();
 
         Pdf::loadHTML($lease->convertBody())->save($filePath);
+
+        // TODO: save the url on $lease
+
+        event(new LeaseGeneratedSuccessfullyEvent($lease));
 
         return $filePath;
     }
