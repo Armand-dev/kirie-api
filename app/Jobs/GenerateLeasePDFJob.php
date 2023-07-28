@@ -28,7 +28,5 @@ class GenerateLeasePDFJob implements ShouldQueue
     public function handle(LeaseService $leaseService): void
     {
         $filePath = $leaseService->generatePDF($this->event->lease);
-        // TODO: send email
-        // TODO: emit to socket
     }
 }

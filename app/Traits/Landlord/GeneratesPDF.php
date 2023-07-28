@@ -11,6 +11,6 @@ trait GeneratesPDF
 
     public function getPDFFilepath(): string
     {
-        return 'contract.pdf';
+        return now() . '_contract.pdf';
     }
 }
