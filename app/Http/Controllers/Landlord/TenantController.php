@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Landlord;
 
 use App\DataTransferObjects\Landlord\TenantDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TenantRequest;
+use App\Http\Requests\Landlord\TenantRequest;
 use App\Http\Resources\Landlord\TenantResource;
 use App\Models\Landlord\Tenant;
 use App\Models\User;
 use App\Services\Landlord\TenantService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TenantController extends Controller
 {

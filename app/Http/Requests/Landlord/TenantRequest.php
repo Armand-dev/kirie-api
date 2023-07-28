@@ -2,13 +2,12 @@
 
 namespace App\Http\Requests\Landlord;
 
-use App\Enums\Landlord\PropertyType;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rules\Enum;
 
-class PropertyRequest extends FormRequest
+class TenantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +24,16 @@ class PropertyRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', new Enum(PropertyType::class)],
-            'cost_of_acquisition' => ['numeric','min:0'],
-            'rooms' => ['numeric','min:0'],
-            'baths' => ['numeric','min:0'],
-            'parking' => ['numeric','min:0'],
-            'area' => ['numeric','min:0'],
-            'address.street' => ['required', 'string'],
-            'address.street_number' => ['required', 'string'],
-            'address.address' => ['string'],
+        $rules = [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
         ];
+
+        if (request()->route()->getActionMethod() == 'store') {
+            $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:'.User::class];
+        }
+
+        return $rules;
     }
 
     protected function failedValidation(Validator $validator)

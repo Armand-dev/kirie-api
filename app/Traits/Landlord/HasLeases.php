@@ -6,6 +6,7 @@ use App\Models\Landlord\Lease;
 use App\Models\Landlord\LeaseTemplate;
 use App\Models\Landlord\Property;
 use App\Models\Landlord\Tenant;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -30,5 +31,10 @@ trait HasLeases
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class, 'user_tenant', 'user_id', 'tenant_id');
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

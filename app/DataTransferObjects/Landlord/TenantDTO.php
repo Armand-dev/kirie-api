@@ -2,7 +2,7 @@
 
 namespace App\DataTransferObjects\Landlord;
 
-use App\Http\Requests\TenantRequest;
+use App\Http\Requests\Landlord\TenantRequest;
 
 class TenantDTO
 {

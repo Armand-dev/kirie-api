@@ -7,10 +7,12 @@ use App\Models\Landlord\Lease;
 use App\Models\Landlord\LeaseTemplate;
 use App\Models\Landlord\Property;
 use App\Models\Landlord\Tenant;
+use App\Models\Transaction;
 use App\Policies\Landlord\LeasePolicy;
 use App\Policies\Landlord\LeaseTemplatePolicy;
 use App\Policies\Landlord\PropertyPolicy;
 use App\Policies\Landlord\TenantPolicy;
+use App\Policies\Landlord\TransactionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         Lease::class => LeasePolicy::class,
         LeaseTemplate::class => LeaseTemplatePolicy::class,
         Tenant::class => TenantPolicy::class,
+        Transaction::class => TransactionPolicy::class,
     ];
 
     /**

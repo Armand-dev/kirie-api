@@ -4,11 +4,13 @@ namespace App\Models\Landlord;
 
 use App\Enums\Landlord\LeaseStatus;
 use App\Enums\Landlord\SignatureType;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Traits\Landlord\GeneratesPDF;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lease extends Model
@@ -39,5 +41,10 @@ class Lease extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 }
