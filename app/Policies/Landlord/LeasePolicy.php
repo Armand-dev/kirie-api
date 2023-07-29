@@ -26,13 +26,20 @@ class LeasePolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @param User $user
+     * @return bool
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function create(User $user): bool
     {
+        /** @var Property $property */
         $property = Property::findOrFail(request()->get('property_id'));
+        /** @var User $tenant */
         $tenant = User::find(request()->get('tenant_id'));
 
-        if (isset($tenant) && !$tenant->hasRole('tenant')) {
+        if ($tenant instanceof User && !$tenant->hasRole('tenant')) {
             return false;
         }
 
@@ -44,10 +51,12 @@ class LeasePolicy
      */
     public function update(User $user, Lease $lease): bool
     {
+        /** @var Property $property */
         $property = Property::findOrFail(request()->get('property_id'));
+        /** @var User $tenant */
         $tenant = User::find(request()->get('tenant_id'));
 
-        if (isset($tenant) && !$tenant->hasRole('tenant')) {
+        if ($tenant instanceof User && !$tenant->hasRole('tenant')) {
             return false;
         }
 

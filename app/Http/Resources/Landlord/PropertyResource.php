@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Landlord;
 
+use App\Models\Landlord\Property;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +15,9 @@ class PropertyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /**
+         * @var Property $this
+         */
         return [
             'id' => $this->id,
             'name' => $this->name,

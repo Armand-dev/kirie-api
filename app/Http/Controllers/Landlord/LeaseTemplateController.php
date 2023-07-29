@@ -34,9 +34,9 @@ class LeaseTemplateController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LeaseTemplateRequest $request)
+    public function store(LeaseTemplateRequest $request): JsonResponse
     {
-        $leaseTemplate = $this->service->store(LeaseTemplateDTO::fromApiRequest($request));
+        $leaseTemplate = $this->service->store(LeaseTemplateDTO::fromApiRequest($request), auth()->user());
 
         return response()->json([
             'success' => true,
@@ -47,7 +47,7 @@ class LeaseTemplateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LeaseTemplate $leaseTemplate)
+    public function show(LeaseTemplate $leaseTemplate): JsonResponse
     {
         return response()->json([
             'success' => true,
@@ -58,7 +58,7 @@ class LeaseTemplateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(LeaseTemplateRequest $request, LeaseTemplate $leaseTemplate)
+    public function update(LeaseTemplateRequest $request, LeaseTemplate $leaseTemplate): JsonResponse
     {
         $leaseTemplate = $this->service->update($leaseTemplate, LeaseTemplateDTO::fromApiRequest($request));
 
@@ -71,7 +71,7 @@ class LeaseTemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LeaseTemplate $leaseTemplate)
+    public function destroy(LeaseTemplate $leaseTemplate): JsonResponse
     {
         $leaseTemplate->delete();
 

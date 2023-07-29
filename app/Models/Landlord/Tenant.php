@@ -46,6 +46,9 @@ class Tenant extends Model
         'password' => 'hashed',
     ];
 
+    /**
+     * @return BelongsToMany<User>
+     */
     public function landlords(): belongsToMany
     {
         return $this->belongsToMany(User::class, 'user_tenant', 'tenant_id', 'user_id');

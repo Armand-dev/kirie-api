@@ -24,16 +24,25 @@ class Property extends Model
         'type' => PropertyType::class
     ];
 
+    /**
+     * @return BelongsTo<User, Property>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return HasMany<Lease>
+     */
     public function leases(): HasMany
     {
         return $this->hasMany(Lease::class);
     }
 
+    /**
+     * @return HasMany<Lease>
+     */
     public function activeLease(): HasMany
     {
         return $this->hasMany(Lease::class)->where('status', LeaseStatus::Active);

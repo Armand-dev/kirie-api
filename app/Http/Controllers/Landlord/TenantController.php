@@ -36,7 +36,7 @@ class TenantController extends Controller
      */
     public function store(TenantRequest $request): JsonResponse
     {
-        $tenant = $this->service->store(TenantDTO::fromApiRequest($request));
+        $tenant = $this->service->store(TenantDTO::fromApiRequest($request), auth()->user());
 
         return response()->json([
             'success' => true,

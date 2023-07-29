@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Landlord\Lease;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,9 +16,12 @@ class LeaseGeneratedSuccessfullyEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Lease $lease;
+    public User $user;
 
     /**
-     * Create a new event instance.
+     * Create a new event instance
+     *
+     * @param Lease $lease
      */
     public function __construct(Lease $lease)
     {

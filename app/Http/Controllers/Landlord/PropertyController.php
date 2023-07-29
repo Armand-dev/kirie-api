@@ -35,7 +35,7 @@ class PropertyController extends Controller
      */
     public function store(PropertyRequest $request): JsonResponse
     {
-        $property = $this->service->store(PropertyDTO::fromApiRequest($request));
+        $property = $this->service->store(PropertyDTO::fromApiRequest($request), auth()->user());
 
         return response()->json([
             'success' => true,

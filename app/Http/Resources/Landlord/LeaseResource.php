@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Landlord;
 
+use App\Models\Landlord\Lease;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,6 +16,9 @@ class LeaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /**
+         * @var Lease $this
+         */
         return [
             'id' => $this->id,
             'number' => $this->number,

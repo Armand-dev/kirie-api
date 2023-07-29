@@ -5,13 +5,18 @@ namespace App\Services\Landlord;
 use App\DataTransferObjects\Landlord\LeaseDTO;
 use App\Events\LeaseGeneratedSuccessfullyEvent;
 use App\Models\Landlord\Lease;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class LeaseService
 {
-    public function store(LeaseDTO $leaseDTO)
+    /**
+     * @param LeaseDTO $leaseDTO
+     * @return Lease
+     */
+    public function store(LeaseDTO $leaseDTO, User $user): Lease
     {
-        return auth()->user()->leases()->create([
+        return Lease::create([
             'number' => $leaseDTO->number,
             'body' => $leaseDTO->body,
             'signature_type' => $leaseDTO->signature_type,
@@ -25,10 +30,16 @@ class LeaseService
             'due_day' => $leaseDTO->due_day,
             'property_id' => $leaseDTO->property_id,
             'tenant_id' => $leaseDTO->tenant_id,
+            'user_id' => $user->id,
         ]);
     }
 
-    public function update(Lease $lease, LeaseDTO $leaseDTO)
+    /**
+     * @param Lease $lease
+     * @param LeaseDTO $leaseDTO
+     * @return Lease
+     */
+    public function update(Lease $lease, LeaseDTO $leaseDTO): Lease
     {
         return tap($lease)->update([
             'number' => $leaseDTO->number,
@@ -48,6 +59,10 @@ class LeaseService
 
     }
 
+    /**
+     * @param Lease $lease
+     * @return string
+     */
     public function generatePDF(Lease $lease): string
     {
         $filePath = $lease->getPDFFilepath();

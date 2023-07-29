@@ -14,7 +14,12 @@ use Illuminate\Support\Str;
 
 class TenantService
 {
-    public function store(TenantDTO $tenantDTO)
+    /**
+     * @param TenantDTO $tenantDTO
+     * @param User $user
+     * @return Tenant
+     */
+    public function store(TenantDTO $tenantDTO, User $user): Tenant
     {
         $tenant = Tenant::create([
             'first_name' => $tenantDTO->first_name,
@@ -23,15 +28,21 @@ class TenantService
             'password' => Hash::make(Str::random())
         ]);
 
-        $tenant = User::find($tenant->id);
-        $tenant->assignRole('tenant');
+        /** @var User $tenantUser */
+        $tenantUser = User::find($tenant->id);
+        $tenantUser->assignRole('tenant');
 
-        auth()->user()->tenants()->attach($tenant->id);
+        $user->tenants()->attach($tenantUser->id);
 
         return $tenant;
     }
 
-    public function update(Tenant $tenant, TenantDTO $tenantDTO)
+    /**
+     * @param Tenant $tenant
+     * @param TenantDTO $tenantDTO
+     * @return Tenant
+     */
+    public function update(Tenant $tenant, TenantDTO $tenantDTO): Tenant
     {
         return tap($tenant)->update([
             'first_name' => $tenantDTO->first_name,
