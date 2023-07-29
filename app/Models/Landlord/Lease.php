@@ -29,26 +29,42 @@ class Lease extends Model
         'signature_type' => SignatureType::class,
     ];
 
+    /**
+     * @return BelongsTo<User, Lease>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<User, Lease>
+     */
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Property, Lease>
+     */
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
     }
 
+    /**
+     * @return HasMany<Transaction>
+     */
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
+    /**
+     * @param Builder<Lease> $query
+     * @return void
+     */
     public function scopeActive(Builder $query): void
     {
         $query->where('status', LeaseStatus::Active->value);

@@ -4,6 +4,7 @@ namespace App\DataTransferObjects\Landlord;
 
 use App\Enums\Landlord\TransactionStatus;
 use App\Http\Requests\Landlord\TransactionRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionDTO
 {
@@ -17,6 +18,10 @@ class TransactionDTO
         public readonly ?int $lease_id,
     ){}
 
+    /**
+     * @param TransactionRequest $request
+     * @return TransactionDTO
+     */
     public static function fromApiRequest(TransactionRequest $request): TransactionDTO
     {
         return new self(

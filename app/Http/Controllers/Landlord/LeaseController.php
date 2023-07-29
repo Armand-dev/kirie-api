@@ -34,9 +34,9 @@ class LeaseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LeaseRequest $request)
+    public function store(LeaseRequest $request): JsonResponse
     {
-        $lease = $this->service->store(LeaseDTO::fromApiRequest($request));
+        $lease = $this->service->store(LeaseDTO::fromApiRequest($request), auth()->user());
 
         event(new LeaseCreatedEvent($lease));
 
@@ -73,7 +73,7 @@ class LeaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lease $lease)
+    public function destroy(Lease $lease): JsonResponse
     {
         $lease->delete();
 

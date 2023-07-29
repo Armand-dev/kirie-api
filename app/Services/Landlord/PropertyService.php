@@ -5,13 +5,19 @@ namespace App\Services\Landlord;
 use App\DataTransferObjects\Landlord\PropertyDTO;
 use App\Models\Landlord\Lease;
 use App\Models\Landlord\Property;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PropertyService
 {
-    public function store(PropertyDTO $propertyDTO)
+    /**
+     * @param PropertyDTO $propertyDTO
+     * @param User $user
+     * @return Property
+     */
+    public function store(PropertyDTO $propertyDTO, User $user): Property
     {
-        return auth()->user()->properties()->create([
+        return Property::create([
             'name' => $propertyDTO->name,
             'type' => $propertyDTO->type,
             'cost_of_acquisition' => $propertyDTO->cost_of_acquisition,
@@ -21,11 +27,17 @@ class PropertyService
             'parking' => $propertyDTO->parking,
             'street' => $propertyDTO->street,
             'street_number' => $propertyDTO->street_number,
-            'address' => $propertyDTO->address
+            'address' => $propertyDTO->address,
+            'user_id' => $user->id,
         ]);
     }
 
-    public function update(Property $property, PropertyDTO $propertyDTO)
+    /**
+     * @param Property $property
+     * @param PropertyDTO $propertyDTO
+     * @return Property
+     */
+    public function update(Property $property, PropertyDTO $propertyDTO): Property
     {
         return tap($property)->update([
             'name' => $propertyDTO->name,
@@ -40,14 +52,5 @@ class PropertyService
             'address' => $propertyDTO->address
         ]);
 
-    }
-
-    public function generatePDF(Lease $lease): string
-    {
-        $filePath = $lease->getPDFFilepath();
-
-        Pdf::loadHTML($lease->convertBody())->save($filePath);
-
-        return $filePath;
     }
 }

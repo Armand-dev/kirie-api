@@ -23,11 +23,18 @@ class LeaseTemplate extends Model
         'global' => LeaseTemplateGlobal::class
     ];
 
+    /**
+     * @return BelongsTo<User, LeaseTemplate>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @param Builder<LeaseTemplate> $query
+     * @return void
+     */
     public function scopeGlobal(Builder $query): void
     {
         $query->where('global', true);

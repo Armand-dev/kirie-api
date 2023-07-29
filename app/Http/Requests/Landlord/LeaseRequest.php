@@ -22,7 +22,7 @@ class LeaseRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, mixed>
      */
     public function rules(): array
     {

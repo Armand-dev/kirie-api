@@ -7,7 +7,11 @@ use App\Models\Transaction;
 
 class TransactionService
 {
-    public function store(TransactionDTO $transactionDTO)
+    /**
+     * @param TransactionDTO $transactionDTO
+     * @return Transaction
+     */
+    public function store(TransactionDTO $transactionDTO): Transaction
     {
         return Transaction::create([
             'type' => $transactionDTO->type,
@@ -20,9 +24,14 @@ class TransactionService
         ]);
     }
 
-    public function update(Transaction $transaction, TransactionDTO $transactionDTO)
+    /**
+     * @param Transaction $transaction
+     * @param TransactionDTO $transactionDTO
+     * @return Transaction
+     */
+    public function update(Transaction $transaction, TransactionDTO $transactionDTO): Transaction
     {
-        return $transaction->update([
+        return tap($transaction)->update([
             'type' => $transactionDTO->type,
             'date' => $transactionDTO->date,
             'description' => $transactionDTO->description,

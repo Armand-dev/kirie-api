@@ -3,6 +3,7 @@
 namespace App\Listeners\Landlord;
 
 use App\Jobs\GenerateLeasePDFJob;
+use App\Models\Landlord\Lease;
 use App\Services\Landlord\LeaseService;
 
 class GenerateLeasePDFListener
@@ -14,7 +15,8 @@ class GenerateLeasePDFListener
     {}
 
     /**
-     * Handle the event.
+     * @param object{lease: Lease} $event
+     * @return void
      */
     public function handle(object $event): void
     {

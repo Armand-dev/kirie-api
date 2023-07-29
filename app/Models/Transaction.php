@@ -25,11 +25,17 @@ class Transaction extends Model
         'status' => TransactionStatus::class,
     ];
 
+    /**
+     * @return BelongsTo<User, Transaction>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Lease, Transaction>
+     */
     public function lease(): BelongsTo
     {
         return $this->belongsTo(Lease::class);
