@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Services\Landlord\DocumentService;
 use App\Services\Landlord\LeaseService;
 use App\Services\Landlord\LeaseTemplateService;
 use App\Services\Landlord\PropertyService;
+use App\Services\Landlord\TenantService;
+use App\Services\Landlord\TransactionService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +25,15 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(PropertyService::class, function() {
             return new PropertyService();
+        });
+        $this->app->singleton(TenantService::class, function() {
+            return new TenantService();
+        });
+        $this->app->singleton(TransactionService::class, function() {
+            return new TransactionService();
+        });
+        $this->app->singleton(DocumentService::class, function() {
+            return new DocumentService();
         });
     }
 

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Tenant extends Model
 {
@@ -54,4 +54,11 @@ class Tenant extends Model
         return $this->belongsToMany(User::class, 'user_tenant', 'tenant_id', 'user_id');
     }
 
+    /**
+     * @return MorphMany<Document>
+     */
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
 }

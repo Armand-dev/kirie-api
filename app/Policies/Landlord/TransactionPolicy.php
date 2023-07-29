@@ -2,9 +2,8 @@
 
 namespace App\Policies\Landlord;
 
-use App\Models\Transaction;
+use App\Models\Landlord\Transaction;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TransactionPolicy
 {

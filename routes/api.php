@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function() {
             Route::apiResource('/tenant', \App\Http\Controllers\Landlord\TenantController::class);
             Route::post('/tenant/attach/{tenant}', [\App\Http\Controllers\Landlord\TenantController::class, 'attachTenant']);
             Route::apiResource('/transaction', \App\Http\Controllers\Landlord\TransactionController::class);
+            Route::apiResource('/document', \App\Http\Controllers\Landlord\DocumentController::class, ['except' => ['update']]);
         });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');

@@ -35,7 +35,7 @@ namespace App\Models\Landlord{
  * @property string|null $file_url
  * @property-read \App\Models\Landlord\Property|null $property
  * @property-read \App\Models\User|null $tenant
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Landlord\Transaction> $transactions
  * @property-read int|null $transactions_count
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Lease active()
@@ -184,7 +184,7 @@ namespace App\Models\Landlord{
 
 namespace App\Models{
 /**
- * App\Models\Transaction
+ * App\Models\Landlord\Transaction
  *
  * @property int $id
  * @property \App\Enums\Landlord\TransactionType $type
@@ -199,23 +199,23 @@ namespace App\Models{
  * @property \App\Enums\Landlord\TransactionStatus $status
  * @property-read \App\Models\Landlord\Lease|null $lease
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereLeaseId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereTotal($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereLeaseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Landlord\Transaction withoutTrashed()
  */
 	class Transaction extends \Eloquent {}
 }
@@ -250,7 +250,7 @@ namespace App\Models{
  * @property-read int|null $tenants_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Transaction> $transactions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Landlord\Transaction> $transactions
  * @property-read int|null $transactions_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
