@@ -21,12 +21,30 @@ Route::prefix('v1')->group(function() {
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::middleware('role:landlord')->group(function() {
-            Route::apiResource('/property', \App\Http\Controllers\Landlord\PropertyController::class);
-            Route::apiResource('/lease', \App\Http\Controllers\Landlord\LeaseController::class);
-            Route::apiResource('/lease-template', \App\Http\Controllers\Landlord\LeaseTemplateController::class);
-            Route::apiResource('/tenant', \App\Http\Controllers\Landlord\TenantController::class);
-            Route::post('/tenant/attach/{tenant}', [\App\Http\Controllers\Landlord\TenantController::class, 'attachTenant']);
-            Route::apiResource('/transaction', \App\Http\Controllers\Landlord\TransactionController::class);
+            /** Properties */
+            Route::apiResource('/property', \App\Http\Controllers\Landlord\PropertyController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Leases */
+            Route::apiResource('/lease', \App\Http\Controllers\Landlord\LeaseController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Lease templates */
+            Route::apiResource('/lease-template', \App\Http\Controllers\Landlord\LeaseTemplateController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Tenants */
+            Route::apiResource('/tenant', \App\Http\Controllers\Landlord\TenantController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+            Route::post('/tenant/attach/{tenant}', [\App\Http\Controllers\Landlord\TenantController::class, 'attachTenant'])->name('tenant.attach')
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Transactions */
+            Route::apiResource('/transaction', \App\Http\Controllers\Landlord\TransactionController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Subscriptions */
+            Route::post('/subscription-checkout-url', [\App\Http\Controllers\SubscriptionController::class, 'subscriptionCheckoutURL'])->name('cashier.subscription-checkout-url');
         });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
