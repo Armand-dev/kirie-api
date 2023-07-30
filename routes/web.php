@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return 'You have no power here.';
-});
+})->name('test');

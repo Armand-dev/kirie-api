@@ -12,7 +12,7 @@ parameters:
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'
 #
-#   excludePaths:
-#       - app/Http/Resources/*
+    excludePaths:
+        - app/Http/Resources/*
 #
 #    checkMissingIterableValueType: false
