@@ -4,7 +4,6 @@ namespace App\Models\Landlord;
 
 use App\Enums\Landlord\LeaseStatus;
 use App\Enums\Landlord\SignatureType;
-use App\Models\Transaction;
 use App\Models\User;
 use App\Traits\Landlord\GeneratesPDF;
 use Illuminate\Database\Eloquent\Builder;

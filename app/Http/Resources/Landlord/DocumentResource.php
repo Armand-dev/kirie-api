@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources\Landlord;
 
+use App\Models\Landlord\Document;
 use App\Models\Landlord\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-class TransactionResource extends JsonResource
+class DocumentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,18 +18,17 @@ class TransactionResource extends JsonResource
     public function toArray(Request $request): array
     {
         /**
-         * @var Transaction $this
+         * @var Document $this
          */
         return [
             'id' => $this->id,
+            'size' => $this->size,
+            'original_name' => $this->original_name,
+            'url' => Storage::url($this->url),
             'type' => $this->type,
-            'date' => $this->date,
-            'description' => $this->description,
-            'total' => $this->total,
-            'status' => $this->status,
-
-            'lease' => new LeaseResource($this->whenLoaded('lease')),
-            'user' => new UserResource($this->whenLoaded('user')),
+            'documentable_id' => $this->documentable_id,
+            'documentable_type' => $this->documentable_type,
+            'user_id' => $this->user_id,
         ];
     }
 }

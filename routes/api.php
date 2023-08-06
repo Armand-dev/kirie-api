@@ -43,6 +43,10 @@ Route::prefix('v1')->group(function() {
             Route::apiResource('/transaction', \App\Http\Controllers\Landlord\TransactionController::class)
                 ->middleware('has_subscription:basic,standard,premium');
 
+            /** Documents */
+            Route::apiResource('/document', \App\Http\Controllers\Landlord\DocumentController::class, ['except' => ['update']])
+                ->middleware('has_subscription:basic,standard,premium');
+          
             /** Subscriptions */
             Route::post('/subscription-checkout-url', [\App\Http\Controllers\SubscriptionController::class, 'subscriptionCheckoutURL'])->name('cashier.subscription-checkout-url');
         });

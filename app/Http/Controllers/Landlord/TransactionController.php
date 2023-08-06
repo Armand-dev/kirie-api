@@ -6,10 +6,9 @@ use App\DataTransferObjects\Landlord\TransactionDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Landlord\TransactionRequest;
 use App\Http\Resources\Landlord\TransactionResource;
-use App\Models\Transaction;
+use App\Models\Landlord\Transaction;
 use App\Services\Landlord\TransactionService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {

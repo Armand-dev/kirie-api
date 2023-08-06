@@ -3,7 +3,7 @@
 namespace App\Services\Landlord;
 
 use App\DataTransferObjects\Landlord\TransactionDTO;
-use App\Models\Transaction;
+use App\Models\Landlord\Transaction;
 
 class TransactionService
 {
