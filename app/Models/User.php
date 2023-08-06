@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+ use Laravel\Cashier\Billable;
+ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -19,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         Notifiable,
         SoftDeletes,
         HasRoles,
-        HasLeases;
+        HasLeases,
+        Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,4 +51,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

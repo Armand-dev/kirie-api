@@ -27,6 +27,10 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('landlord');
+        $user->createAsStripeCustomer([
+            'email' => $user->email,
+            'name' => $user->full_name,
+        ]);
 
         event(new Registered($user));
 

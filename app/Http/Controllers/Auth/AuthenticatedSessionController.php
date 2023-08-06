@@ -32,7 +32,8 @@ class AuthenticatedSessionController extends Controller
             'success' => true,
             'data' => [
                 'user' => new UserResource(\auth()->user()),
-                'access_token' => \auth()->user()->createToken('access-token')
+                'access_token' => \auth()->user()->createToken('access-token'),
+                'billing_portal_url' => $request->user()->billingPortalUrl(route('test'))
             ]
         ]);
     }
