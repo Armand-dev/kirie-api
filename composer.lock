@@ -7612,7 +7612,6 @@
                 },
                 "laravel": {
                     "providers": [
-                        "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider"
                     ]
                 }
             },
