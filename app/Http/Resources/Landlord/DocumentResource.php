@@ -6,6 +6,7 @@ use App\Models\Landlord\Document;
 use App\Models\Landlord\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentResource extends JsonResource
 {
@@ -23,8 +24,11 @@ class DocumentResource extends JsonResource
             'id' => $this->id,
             'size' => $this->size,
             'original_name' => $this->original_name,
-            'url' => $this->url,
+            'url' => Storage::url($this->url),
             'type' => $this->type,
+            'documentable_id' => $this->documentable_id,
+            'documentable_type' => $this->documentable_type,
+            'user_id' => $this->user_id,
         ];
     }
 }

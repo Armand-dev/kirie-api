@@ -55,10 +55,10 @@ trait HasLeases
     }
 
     /**
-     * @return MorphMany<Document>
+     * @return HasMany<Document>
      */
-    public function documents(): MorphMany
+    public function documents(): HasMany
     {
-        return $this->morphMany(Document::class, 'documentable');
+        return $this->hasMany(Document::class);
     }
 }

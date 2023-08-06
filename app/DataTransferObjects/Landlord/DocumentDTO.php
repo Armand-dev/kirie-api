@@ -19,6 +19,7 @@ class DocumentDTO
         public readonly string $documentable_id,
         public readonly ?UploadedFile $document,
         public readonly ?string $type,
+        public readonly ?int $user_id,
     ){}
 
     public static function fromApiRequest(DocumentRequest $request): DocumentDTO
@@ -31,6 +32,7 @@ class DocumentDTO
             documentable_id: $request->validated('documentable_id'),
             document: $document,
             type: $request->validated('type'),
+            user_id: auth()->user()->id
         );
     }
 }

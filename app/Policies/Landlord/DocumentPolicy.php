@@ -20,7 +20,7 @@ class DocumentPolicy
      */
     public function view(User $user, Document $document): bool
     {
-        return $user->hasRole('landlord') && $document->documentable->user_id == $user->id;
+        return $user->hasRole('landlord') && $document->user_id == $user->id;
     }
 
     /**
@@ -36,7 +36,7 @@ class DocumentPolicy
      */
     public function update(User $user, Document $document): bool
     {
-        return $user->hasRole('landlord') && $document->documentable->user_id == $user->id;
+        return $user->hasRole('landlord') && $document->user_id == $user->id;
     }
 
     /**
@@ -44,7 +44,7 @@ class DocumentPolicy
      */
     public function delete(User $user, Document $document): bool
     {
-        return $user->hasRole('landlord') && $document->documentable->user_id == $user->id;
+        return $user->hasRole('landlord') && $document->user_id == $user->id;
     }
 
     /**
@@ -52,7 +52,7 @@ class DocumentPolicy
      */
     public function restore(User $user, Document $document): bool
     {
-        return $user->hasRole('landlord') && $document->documentable->user_id == $user->id;
+        return $user->hasRole('landlord') && $document->user_id == $user->id;
     }
 
     /**
@@ -60,6 +60,6 @@ class DocumentPolicy
      */
     public function forceDelete(User $user, Document $document): bool
     {
-        return $user->hasRole('landlord') && $document->documentable->user_id == $user->id;
+        return $user->hasRole('landlord') && $document->user_id == $user->id;
     }
 }

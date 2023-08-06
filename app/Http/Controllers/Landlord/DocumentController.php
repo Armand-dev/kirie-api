@@ -27,7 +27,7 @@ class DocumentController extends Controller
         // TODO: what document should i send? i should expect query param for documentable type and id
         return response()->json([
             'success' => true,
-            'data' => DocumentResource::collection([])
+            'data' => DocumentResource::collection(auth()->user()->documents)
         ]);
     }
 

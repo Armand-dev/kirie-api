@@ -29,16 +29,16 @@ class DocumentService
             'size' => $documentDTO->document->getSize(),
             'original_name' => $documentDTO->document->getClientOriginalName(),
             'url' => $storageUrl,
+            'user_id' => $documentDTO->user_id
         ]);
     }
 
     /**
      * @param UploadedFile $file
-     * @return string|false
+     * @return string|boolean
      */
-    public function saveToStorage(UploadedFile $file): string|false
+    public function saveToStorage(UploadedFile $file): string|bool
     {
-        $path = storage_path('documents') . '/' . $file->hashName();
-        return Storage::putFileAs($path, $file);
+        return Storage::put('documents', $file);
     }
 }
