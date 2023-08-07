@@ -44,7 +44,8 @@ class RentTransactionJob implements ShouldQueue
                 total: $lease->rent_amount,
                 status: TransactionStatus::Unpaid->value,
                 user_id: $lease->user_id,
-                lease_id: $lease->id
+                lease_id: $lease->id,
+                property_id: $lease->property_id,
             );
 
             $service->store($transactionDTO);

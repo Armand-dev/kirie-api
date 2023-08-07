@@ -28,6 +28,7 @@ class TransactionResource extends JsonResource
 
             'lease' => new LeaseResource($this->whenLoaded('lease')),
             'user' => new UserResource($this->whenLoaded('user')),
+            'property' => new PropertyResource($this->whenLoaded('property')),
         ];
     }
 }

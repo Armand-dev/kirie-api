@@ -56,4 +56,12 @@ class Property extends Model
     {
         return $this->morphMany(Document::class, 'documentable');
     }
+
+    /**
+     * @return HasMany<Transaction>
+     */
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

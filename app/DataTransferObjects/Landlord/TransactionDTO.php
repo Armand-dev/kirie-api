@@ -16,6 +16,7 @@ class TransactionDTO
         public readonly string $status,
         public readonly int $user_id,
         public readonly ?int $lease_id,
+        public readonly ?int $property_id,
     ){}
 
     /**
@@ -32,6 +33,7 @@ class TransactionDTO
             status: TransactionStatus::Paid->value,
             user_id: auth()->user()->id,
             lease_id: $request->validated('lease_id'),
+            property_id: $request->validated('property_id'),
         );
     }
 }

@@ -19,7 +19,7 @@ class TenantService
      * @param User $user
      * @return Tenant
      */
-    public function store(TenantDTO $tenantDTO, User $user): Tenant
+    public function store(TenantDTO $tenantDTO, User $user): User
     {
         $tenant = Tenant::create([
             'first_name' => $tenantDTO->first_name,
@@ -34,7 +34,7 @@ class TenantService
 
         $user->tenants()->attach($tenantUser->id);
 
-        return $tenant;
+        return $tenantUser;
     }
 
     /**
@@ -42,12 +42,13 @@ class TenantService
      * @param TenantDTO $tenantDTO
      * @return Tenant
      */
-    public function update(Tenant $tenant, TenantDTO $tenantDTO): Tenant
+    public function update(Tenant $tenant, TenantDTO $tenantDTO): User
     {
-        return tap($tenant)->update([
+        $tenant->update([
             'first_name' => $tenantDTO->first_name,
             'last_name' => $tenantDTO->last_name
         ]);
 
+        return User::find($tenant->id);
     }
 }

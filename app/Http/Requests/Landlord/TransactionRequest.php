@@ -32,6 +32,7 @@ class TransactionRequest extends FormRequest
             'description' => ['required', 'string', 'max: 20000'],
             'total' => ['required', 'numeric','min:0'],
             'lease_id' => ['numeric', 'exists:App\Models\Landlord\Lease,id,deleted_at,NULL'],
+            'property_id' => ['numeric', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
         ];
     }
 
