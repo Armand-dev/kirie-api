@@ -11,15 +11,13 @@ class TenantResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return UserResource
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request): UserResource
     {
         /**
          * @var User $this
          */
-        return [
-            'tenant' => new UserResource($this)
-        ];
+        return new UserResource($this);
     }
 }

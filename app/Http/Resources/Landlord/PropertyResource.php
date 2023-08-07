@@ -32,6 +32,9 @@ class PropertyResource extends JsonResource
                 'street_number' => $this->street_number,
                 'address' => $this->address,
             ],
+            'active_lease' => LeaseResource::collection($this->whenLoaded('activeLease')),
+            'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
+            'documents' => DocumentResource::collection($this->whenLoaded('documents')),
         ];
     }
 }

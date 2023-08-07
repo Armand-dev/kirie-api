@@ -21,6 +21,7 @@ class TransactionService
             'status' => $transactionDTO->status,
             'lease_id' => $transactionDTO->lease_id,
             'user_id' => $transactionDTO->user_id,
+            'property_id' => $transactionDTO->property_id,
         ]);
     }
 
@@ -37,6 +38,7 @@ class TransactionService
             'description' => $transactionDTO->description,
             'total' => $transactionDTO->total,
             'lease_id' => $transactionDTO->lease_id,
+            'property_id' => $transactionDTO->property_id,
         ]);
     }
 }
