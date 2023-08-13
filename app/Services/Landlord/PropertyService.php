@@ -2,7 +2,9 @@
 
 namespace App\Services\Landlord;
 
+use App\DataTransferObjects\Landlord\EquipmentDTO;
 use App\DataTransferObjects\Landlord\PropertyDTO;
+use App\Models\Landlord\Equipment;
 use App\Models\Landlord\Lease;
 use App\Models\Landlord\Property;
 use App\Models\User;
@@ -51,6 +53,44 @@ class PropertyService
             'street_number' => $propertyDTO->street_number,
             'address' => $propertyDTO->address
         ]);
+    }
 
+    public function storeEquipment(EquipmentDTO $equipmentDTO, User $user, ImageService $imageService): Equipment
+    {
+        $thumbnailUrl = null;
+        if (isset($equipmentDTO->thumbnail)) {
+            $thumbnailUrl = $imageService->saveToStorage($equipmentDTO->thumbnail);
+        }
+
+        return Equipment::create([
+            'brand' => $equipmentDTO->brand,
+            'price' => $equipmentDTO->price,
+            'model' => $equipmentDTO->model,
+            'serial' => $equipmentDTO->serial,
+            'installation_time' => $equipmentDTO->installation_time,
+            'warranty_expiration' => $equipmentDTO->warranty_expiration,
+            'description' => $equipmentDTO->description,
+            'property_id' => $equipmentDTO->property_id,
+            'equipment_category_id' => $equipmentDTO->category_id,
+            'equipment_subcategory_id' => $equipmentDTO->subcategory_id,
+            'user_id' => $user->id,
+            'thumbnail_url' => $thumbnailUrl,
+        ]);
+    }
+
+    public function updateEquipment(Equipment $equipment, EquipmentDTO $equipmentDTO): Equipment
+    {
+        return tap($equipment)->update([
+            'brand' => $equipmentDTO->brand,
+            'price' => $equipmentDTO->price,
+            'model' => $equipmentDTO->model,
+            'serial' => $equipmentDTO->serial,
+            'installation_time' => $equipmentDTO->installation_time,
+            'warranty_expiration' => $equipmentDTO->warranty_expiration,
+            'description' => $equipmentDTO->description,
+            'property_id' => $equipmentDTO->property_id,
+            'equipment_category_id' => $equipmentDTO->category_id,
+            'equipment_subcategory_id' => $equipmentDTO->subcategory_id,
+        ]);
     }
 }

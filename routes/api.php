@@ -54,6 +54,10 @@ Route::prefix('v1')->group(function() {
             Route::apiResource('/image', \App\Http\Controllers\Landlord\ImageController::class, ['except' => ['update']])
                 ->middleware('has_subscription:basic,standard,premium');
 
+            /** Equipment */
+            Route::apiResource('/equipment', \App\Http\Controllers\Landlord\EquipmentController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
         });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
