@@ -46,9 +46,14 @@ Route::prefix('v1')->group(function() {
             /** Documents */
             Route::apiResource('/document', \App\Http\Controllers\Landlord\DocumentController::class, ['except' => ['update']])
                 ->middleware('has_subscription:basic,standard,premium');
-          
+
             /** Subscriptions */
             Route::post('/subscription-checkout-url', [\App\Http\Controllers\SubscriptionController::class, 'subscriptionCheckoutURL'])->name('cashier.subscription-checkout-url');
+
+            /** Images */
+            Route::apiResource('/image', \App\Http\Controllers\Landlord\ImageController::class, ['except' => ['update']])
+                ->middleware('has_subscription:basic,standard,premium');
+
         });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
