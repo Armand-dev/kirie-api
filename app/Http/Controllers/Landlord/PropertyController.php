@@ -26,7 +26,7 @@ class PropertyController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => PropertyResource::collection(auth()->user()->properties->load('activeLease'))
+            'data' => PropertyResource::collection(auth()->user()->properties->load('activeLease', 'thumbnail'))
         ]);
     }
 
@@ -50,7 +50,7 @@ class PropertyController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => new PropertyResource($property->load('activeLease', 'transactions', 'documents'))
+            'data' => new PropertyResource($property->load('activeLease', 'transactions', 'documents', 'images'))
         ]);
     }
 

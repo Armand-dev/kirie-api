@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Landlord\DocumentService;
+use App\Services\Landlord\ImageService;
 use App\Services\Landlord\LeaseService;
 use App\Services\Landlord\LeaseTemplateService;
 use App\Services\Landlord\PropertyService;
@@ -34,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(DocumentService::class, function() {
             return new DocumentService();
+        });
+        $this->app->singleton(ImageService::class, function() {
+            return new ImageService();
         });
     }
 

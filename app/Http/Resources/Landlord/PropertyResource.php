@@ -35,6 +35,8 @@ class PropertyResource extends JsonResource
             'active_lease' => LeaseResource::collection($this->whenLoaded('activeLease')),
             'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
+            'images' => ImageResource::collection($this->whenLoaded('images')),
+            'thumbnail' => ImageResource::collection($this->whenLoaded('thumbnail')),
         ];
     }
 }
