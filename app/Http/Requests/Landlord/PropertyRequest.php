@@ -35,7 +35,7 @@ class PropertyRequest extends FormRequest
             'area' => ['numeric','min:0'],
             'address.street' => ['required', 'string'],
             'address.street_number' => ['required', 'string'],
-            'address.address' => ['string'],
+            'address.address' => ['required', 'string'],
         ];
     }
 
