@@ -3,6 +3,7 @@
 namespace App\Traits\Landlord;
 
 use App\Models\Landlord\Document;
+use App\Models\Landlord\Equipment;
 use App\Models\Landlord\Lease;
 use App\Models\Landlord\LeaseTemplate;
 use App\Models\Landlord\Property;
@@ -60,5 +61,13 @@ trait HasLeases
     public function documents(): HasMany
     {
         return $this->hasMany(Document::class);
+    }
+
+    /**
+     * @return HasMany<Equipment>
+     */
+    public function equipment(): HasMany
+    {
+        return $this->hasMany(Equipment::class);
     }
 }

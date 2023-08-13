@@ -81,4 +81,12 @@ class Property extends Model
     {
         return $this->hasMany(Image::class)->where('order', '=', 1);
     }
+
+    /**
+     * @return HasMany<Equipment>
+     */
+    public function equipment(): HasMany
+    {
+        return $this->hasMany(Equipment::class);
+    }
 }

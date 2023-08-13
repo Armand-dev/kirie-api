@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LeaseTemplateSeeder::class,
             RoleSeeder::class,
+            EquipmentCategoriesSeeder::class,
         ]);
     }
 }
