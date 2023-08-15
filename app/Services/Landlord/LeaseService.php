@@ -69,6 +69,8 @@ class LeaseService
 
         Pdf::loadHTML($lease->convertBody())->save($filePath);
 
+        dd($lease->property()->equipment()->count());
+
         $lease->update([
            'file_url' => $filePath
         ]);

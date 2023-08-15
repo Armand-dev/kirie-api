@@ -27,7 +27,7 @@ class LeaseController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => LeaseResource::collection(auth()->user()->leases)
+            'data' => LeaseResource::collection(auth()->user()->leases->load('tenant', 'property'))
         ]);
     }
 
