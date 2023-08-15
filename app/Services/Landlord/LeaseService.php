@@ -4,6 +4,7 @@ namespace App\Services\Landlord;
 
 use App\DataTransferObjects\Landlord\LeaseDTO;
 use App\Events\LeaseGeneratedSuccessfullyEvent;
+use App\Http\Resources\Landlord\EquipmentResource;
 use App\Models\Landlord\Lease;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -67,9 +68,11 @@ class LeaseService
     {
         $filePath = $lease->getPDFFilepath();
 
-        Pdf::loadHTML($lease->convertBody())->save($filePath);
-
-        dd($lease->property()->equipment()->count());
+        // Generate Lease PDF
+        Pdf::loadView('leases.layout', [
+            'body' => $lease->convertBody(),
+            'equipment' => (EquipmentResource::collection($lease->property->equipment))->toResponse(app('request'))->getData()->data,
+        ])->save($filePath);
 
         $lease->update([
            'file_url' => $filePath
