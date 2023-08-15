@@ -25,6 +25,6 @@ trait GeneratesPDF
             Storage::makeDirectory('users/'. $this->user_id . '/properties/' . $this->property->name);
         }
 
-        return Storage::path('users/' . $this->user_id .'/properties/'. $this->property->name .'/'. $this->property->name . '_' . today() . '_contract_unsigned.pdf') ;
+        return Storage::path('users/' . $this->user_id .'/properties/'. $this->property->name .'/'. $this->property->name . '_' . time() . '_contract_unsigned.pdf') ;
     }
 }
