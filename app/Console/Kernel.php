@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\GetListingServicesCategoriesJob;
 use App\Jobs\RentTransactionJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
          $schedule->job(new RentTransactionJob())->dailyAt('5:00');
+         $schedule->job(new GetListingServicesCategoriesJob())->weeklyOn(1, '00:00');
     }
 
     /**

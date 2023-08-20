@@ -9,6 +9,7 @@ use App\Models\Landlord\LeaseTemplate;
 use App\Models\Landlord\Property;
 use App\Models\Landlord\Tenant;
 use App\Models\Landlord\Transaction;
+use App\Models\ListingPlatform;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -69,5 +70,13 @@ trait HasLeases
     public function equipment(): HasMany
     {
         return $this->hasMany(Equipment::class);
+    }
+
+    /**
+     * @return BelongsToMany<ListingPlatform>
+     */
+    public function listingPlatforms(): BelongsToMany
+    {
+        return $this->belongsToMany(ListingPlatform::class, 'listing_platform_user');
     }
 }

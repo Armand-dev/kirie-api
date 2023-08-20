@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             LeaseTemplateSeeder::class,
             RoleSeeder::class,
             EquipmentCategoriesSeeder::class,
+            ListingPlatformSeeder::class,
         ]);
     }
 }
