@@ -25,7 +25,7 @@ class TransactionController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease'))
+            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease'))->groupBy('date')
         ]);
     }
 
