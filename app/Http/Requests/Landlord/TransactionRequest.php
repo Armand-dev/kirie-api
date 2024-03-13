@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Landlord;
 
+use App\Enums\Landlord\TransactionStatus;
 use App\Enums\Landlord\TransactionType;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,6 +30,7 @@ class TransactionRequest extends FormRequest
         return [
             'type' => ['required', 'string', new Enum(TransactionType::class)],
             'date' => ['required', 'date'],
+            'status' => ['required', new Enum(TransactionStatus::class)],
             'description' => ['required', 'string', 'max: 20000'],
             'total' => ['required', 'numeric','min:0'],
             'lease_id' => ['numeric', 'exists:App\Models\Landlord\Lease,id,deleted_at,NULL'],

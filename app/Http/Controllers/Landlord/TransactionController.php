@@ -8,6 +8,7 @@ use App\Http\Requests\Landlord\TransactionRequest;
 use App\Http\Resources\Landlord\TransactionResource;
 use App\Models\Landlord\Transaction;
 use App\Services\Landlord\TransactionService;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 class TransactionController extends Controller
@@ -25,7 +26,9 @@ class TransactionController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease'))
+            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease'))->groupBy(function ($item) {
+                return Carbon::parse($item->date)->format('Y-m-d');
+            })
         ]);
     }
 

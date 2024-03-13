@@ -30,7 +30,7 @@ class TransactionDTO
             date: $request->validated('date'),
             description: $request->validated('description'),
             total: $request->validated('total'),
-            status: TransactionStatus::Paid->value,
+            status: $request->validated('status'),
             user_id: auth()->user()->id,
             lease_id: $request->validated('lease_id'),
             property_id: $request->validated('property_id'),

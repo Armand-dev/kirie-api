@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Landlord;
 
 use App\Models\Landlord\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +22,7 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'date' => $this->date,
+            'date' => Carbon::parse($this->date)->format('Y-m-d'),
             'description' => $this->description,
             'total' => $this->total,
             'status' => $this->status,
