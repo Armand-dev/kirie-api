@@ -26,7 +26,7 @@ class TransactionController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease')->sortBy('date', 'DESC'))->groupBy(function ($item) {
+            'data' => TransactionResource::collection(auth()->user()->transactions->load('lease')->sortBy('date', SORT_REGULAR, true))->groupBy(function ($item) {
                 return Carbon::parse($item->date)->format('Y-m-d');
             })
         ]);
