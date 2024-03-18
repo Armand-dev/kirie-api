@@ -35,9 +35,9 @@ class LeasePolicy
     public function create(User $user): bool
     {
         /** @var Property $property */
-        $property = Property::findOrFail(request()->get('property_id'));
+        $property = Property::findOrFail(request()->get('property')['id']);
         /** @var User $tenant */
-        $tenant = User::find(request()->get('tenant_id'));
+        $tenant = User::find(request()->get('tenant')['id']);
 
         if ($tenant instanceof User && !$tenant->hasRole('tenant')) {
             return false;
