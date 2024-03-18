@@ -36,8 +36,8 @@ class LeaseDTO
             additional_people: $request->validated('additional_people'),
             deposit: $request->validated('deposit'),
             due_day: $request->validated('due_day'),
-            property_id: $request->validated('property_id'),
-            tenant_id: $request->validated('tenant_id'),
+            property_id: $request->validated('property.id'),
+            tenant_id: $request->validated('tenant.id'),
         );
     }
 }
