@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\Landlord;
 
 use App\Http\Requests\Landlord\LeaseRequest;
+use Carbon\Carbon;
 
 class LeaseDTO
 {
@@ -29,8 +30,8 @@ class LeaseDTO
             body: $request->validated('body'),
             signature_type: $request->validated('signature_type'),
             status: $request->validated('status'),
-            start_date: $request->validated('start_date'),
-            end_date: $request->validated('end_date'),
+            start_date: Carbon::parse($request->validated('start_date'))->toDateString(),
+            end_date: Carbon::parse($request->validated('end_date'))->toDateString(),
             duration: $request->validated('duration'),
             rent_amount: $request->validated('rent_amount'),
             additional_people: $request->validated('additional_people'),
