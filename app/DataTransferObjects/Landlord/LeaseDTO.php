@@ -9,7 +9,7 @@ class LeaseDTO
 {
     public function __construct(
         public readonly string $number,
-        public readonly string $body,
+        public readonly array $body,
         public readonly string $signature_type,
         public readonly string $status,
         public readonly string $start_date,

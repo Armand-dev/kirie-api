@@ -29,8 +29,10 @@ class LeaseResource extends JsonResource
             'end_date' => $this->end_date,
             'duration' => $this->duration,
             'rent_amount' => $this->rent_amount,
+            'rent_currency' => $this->rent_currency,
             'additional_people' => $this->additional_people,
             'deposit' => $this->deposit,
+            'deposit_currency' => $this->deposit_currency,
             'due_day' => $this->due_day,
             'file_url' => $this->file_url,
 

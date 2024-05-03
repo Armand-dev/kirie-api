@@ -29,8 +29,8 @@ class LeaseTemplateSeeder extends Seeder
                 <p>Între subsemnaţii:</p>
                 <p>
                     <ol>
-                        <li style="text-indent: 24px;text-align: justify;">I. <strong>:landlord_name:</strong> domiciliat(ă) în <strong>:landlord_address:</strong> posesor a B.I/C.I. seria <strong>:landlord_ci_serie:</strong> nr. <strong>:landlord_ci_numar:</strong> eliberat de <strong>:landlord_issue_by:</strong> la data de <strong>:landlord_issued_at:</strong> în calitate de proprietar al imobilului situat la adresa <strong>:property_address:</strong></li>
-                        <li style="text-indent: 24px;text-align: justify;">II. <strong>:tenant_name:</strong> domiciliat(ă) în <strong>:tenant_address:</strong> posesor a B.I/C.I. seria <strong>:tenant_ci_serie:</strong> nr. <strong>:tenant_ci_numar:</strong> eliberat de <strong>:tenant_issue_by:</strong> la data de <strong>:tenant_issued_at:</strong> în calitate de chiriaș</li>
+                        <li style="text-indent: 24px;text-align: justify;">I. <strong>:landlord_name:</strong> domiciliat(ă) în <strong>:landlord_address:</strong> posesor a B.I/C.I. seria <strong>:landlord_ci_serie:</strong> nr. <strong>:landlord_ci_numar:</strong> eliberat de <strong>:landlord_ci_issued_by:</strong> la data de <strong>:landlord_ci_issued_at:</strong> în calitate de proprietar al imobilului situat la adresa <strong>:property_address:</strong></li>
+                        <li style="text-indent: 24px;text-align: justify;">II. <strong>:tenant_name:</strong> domiciliat(ă) în <strong>:tenant_address:</strong> posesor a B.I/C.I. seria <strong>:tenant_ci_serie:</strong> nr. <strong>:tenant_ci_numar:</strong> eliberat de <strong>:tenant_ci_issued_by:</strong> la data de <strong>:tenant_ci_issued_at:</strong> în calitate de chiriaș</li>
                     </ol>
                 </p>
                 <br>
