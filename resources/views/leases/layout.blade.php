@@ -28,7 +28,9 @@
         </style>
     </head>
     <body>
-        {!! $body !!}
+        @foreach($body as $page)
+            {!! $page !!}
+        @endforeach
         <div class="page-break"></div>
         @if(count($equipment))
             <div>

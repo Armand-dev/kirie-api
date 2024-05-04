@@ -76,7 +76,7 @@ class LeaseService
         Pdf::loadView('leases.layout', [
             'body' => $lease->convertBody(),
             'equipment' => (EquipmentResource::collection($lease->property->equipment))->toResponse(app('request'))->getData()->data,
-        ])->save($filePath);
+        ])->save($filePath, 'local');
 
         $lease->update([
            'file_url' => $filePath

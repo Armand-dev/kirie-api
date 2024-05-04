@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait GeneratesPDF
 {
-    public function convertBody(): string
+    public function convertBody(): array
     {
         return $this->body;
     }
@@ -21,10 +21,10 @@ trait GeneratesPDF
             Storage::makeDirectory('users/'. $this->user_id);
         }
 
-        if (!Storage::exists('users/'. $this->user_id . '/properties/' . $this->property->name)) {
-            Storage::makeDirectory('users/'. $this->user_id . '/properties/' . $this->property->name);
+        if (!Storage::exists('users/'. $this->user_id . '/properties/' . $this->property->id)) {
+            Storage::makeDirectory('users/'. $this->user_id . '/properties/' . $this->property->id);
         }
 
-        return Storage::url('users/' . $this->user_id .'/properties/'. $this->property->name .'/'. $this->property->name . '_' . time() . '_contract_unsigned.pdf') ;
+        return 'users/' . $this->user_id .'/properties/'. $this->property->id .'/'. $this->property->name . '_' . time() . '_contract_unsigned.pdf';
     }
 }

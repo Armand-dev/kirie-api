@@ -23,6 +23,7 @@ class LeaseDTO
         public readonly int $due_day,
         public readonly int $property_id,
         public readonly ?int $tenant_id,
+        public readonly ?int $template_id,
     ){}
 
     public static function fromApiRequest(LeaseRequest $request): LeaseDTO
@@ -43,6 +44,7 @@ class LeaseDTO
             due_day: $request->validated('due_day'),
             property_id: $request->validated('property.id'),
             tenant_id: $request->validated('tenant.id'),
+            template_id: $request->validated('template.id'),
         );
     }
 }

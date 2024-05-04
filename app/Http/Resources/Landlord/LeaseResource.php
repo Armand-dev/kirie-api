@@ -36,6 +36,9 @@ class LeaseResource extends JsonResource
             'due_day' => $this->due_day,
             'file_url' => $this->file_url,
 
+            'template' => [
+                'id' => $this->lease_template_id
+            ],
             'property' => new PropertyResource($this->whenLoaded('property')),
             'user' => new UserResource($this->whenLoaded('user')),
             'tenant' => new UserResource($this->whenLoaded('tenant')),
