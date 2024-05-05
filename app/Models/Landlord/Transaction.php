@@ -40,4 +40,12 @@ class Transaction extends Model
     {
         return $this->belongsTo(Lease::class);
     }
+
+    /**
+     * @return BelongsTo<Property, Transaction>
+     */
+    public function property(): BelongsTo
+    {
+        return $this->belongsTo(Lease::class);
+    }
 }

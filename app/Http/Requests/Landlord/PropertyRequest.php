@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Landlord;
 
+use App\Enums\CurrencyEnum;
 use App\Enums\Landlord\PropertyType;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,6 +30,7 @@ class PropertyRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', new Enum(PropertyType::class)],
             'cost_of_acquisition' => ['numeric','min:0'],
+            'cost_of_acquisition_currency' => ['string', new Enum(CurrencyEnum::class)],
             'rooms' => ['numeric','min:0'],
             'baths' => ['numeric','min:0'],
             'parking' => ['numeric','min:0'],

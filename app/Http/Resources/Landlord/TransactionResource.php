@@ -25,6 +25,7 @@ class TransactionResource extends JsonResource
             'date' => Carbon::parse($this->date)->format('Y-m-d'),
             'description' => $this->description,
             'total' => $this->total,
+            'total_currency' => $this->total_currency,
             'status' => $this->status,
 
             'lease' => new LeaseResource($this->whenLoaded('lease')),

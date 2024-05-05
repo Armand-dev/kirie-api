@@ -13,6 +13,7 @@ class TransactionDTO
         public readonly string $date,
         public readonly string $description,
         public readonly float $total,
+        public readonly string $total_currency,
         public readonly string $status,
         public readonly int $user_id,
         public readonly ?int $lease_id,
@@ -30,10 +31,11 @@ class TransactionDTO
             date: $request->validated('date'),
             description: $request->validated('description'),
             total: $request->validated('total'),
+            total_currency: $request->validated('total_currency'),
             status: $request->validated('status'),
             user_id: auth()->user()->id,
             lease_id: $request->validated('lease_id'),
-            property_id: $request->validated('property_id'),
+            property_id: $request->validated('property.id'),
         );
     }
 }

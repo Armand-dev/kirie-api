@@ -18,6 +18,7 @@ class TransactionService
             'date' => $transactionDTO->date,
             'description' => $transactionDTO->description,
             'total' => $transactionDTO->total,
+            'total_currency' => $transactionDTO->total_currency,
             'status' => $transactionDTO->status,
             'lease_id' => $transactionDTO->lease_id,
             'user_id' => $transactionDTO->user_id,
@@ -37,6 +38,7 @@ class TransactionService
             'date' => $transactionDTO->date,
             'description' => $transactionDTO->description,
             'total' => $transactionDTO->total,
+            'total_currency' => $transactionDTO->total_currency,
             'lease_id' => $transactionDTO->lease_id,
             'property_id' => $transactionDTO->property_id,
         ]);

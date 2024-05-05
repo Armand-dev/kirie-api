@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Landlord;
 
+use App\Enums\CurrencyEnum;
 use App\Enums\Landlord\TransactionStatus;
 use App\Enums\Landlord\TransactionType;
 use Illuminate\Contracts\Validation\Validator;
@@ -33,10 +34,12 @@ class TransactionRequest extends FormRequest
             'status' => ['required', new Enum(TransactionStatus::class)],
             'description' => ['required', 'string', 'max: 20000'],
             'total' => ['required', 'numeric','min:0'],
+            'total_currency' => ['required', 'string', new Enum(CurrencyEnum::class)],
             'lease_id' => ['numeric', 'exists:App\Models\Landlord\Lease,id,deleted_at,NULL'],
-            'property_id' => ['numeric', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
+            'property.id' => ['required', 'numeric', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
         ];
     }
+
 
     protected function failedValidation(Validator $validator)
     {

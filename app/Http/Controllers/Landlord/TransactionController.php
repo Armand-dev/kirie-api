@@ -52,7 +52,7 @@ class TransactionController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => new TransactionResource($transaction)
+            'data' => new TransactionResource($transaction->load('property'))
         ]);
     }
 
@@ -65,7 +65,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => new TransactionResource($transaction)
+            'data' => new TransactionResource($transaction->load('property'))
         ]);
     }
 
