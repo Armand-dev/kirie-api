@@ -43,6 +43,7 @@ class LeaseRequest extends FormRequest
             'due_day' => ['required', 'numeric', 'min:1', 'max:31'],
             'property.id' => ['required', 'numeric', 'exists:App\Models\Landlord\Property,id,deleted_at,NULL'],
             'tenant.id' => ['numeric', 'exists:App\Models\Landlord\Tenant,id,deleted_at,NULL'],
+            'template.id' => ['numeric', 'exists:App\Models\Landlord\LeaseTemplate,id,deleted_at,NULL'],
         ];
     }
 

@@ -34,6 +34,7 @@ class LeaseService
             'property_id' => $leaseDTO->property_id,
             'tenant_id' => $leaseDTO->tenant_id,
             'user_id' => $user->id,
+            'lease_template_id' => $leaseDTO->template_id,
         ]);
     }
 
@@ -60,6 +61,7 @@ class LeaseService
             'due_day' => $leaseDTO->due_day,
             'property_id' => $leaseDTO->property_id,
             'tenant_id' => $leaseDTO->tenant_id,
+            'lease_template_id' => $leaseDTO->template_id,
         ]);
 
     }
