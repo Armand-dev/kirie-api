@@ -10,6 +10,8 @@ class ListingPlatform extends Model
 {
     use HasFactory;
 
+    const OLX = 1;
+
     protected $guarded = ['id'];
 
     /**

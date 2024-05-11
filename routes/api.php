@@ -59,6 +59,14 @@ Route::prefix('v1')->group(function() {
             Route::apiResource('/equipment', \App\Http\Controllers\Landlord\EquipmentController::class)
                 ->middleware('has_subscription:basic,standard,premium');
 
+            /** Olx */
+            Route::prefix('olx')->middleware(['has_subscription:basic,standard,premium'])->group(function () {
+                Route::get('/getOAuthUrl', [\App\Http\Controllers\OlxController::class, 'getOAuthUrl']);
+                Route::post('/connect', [\App\Http\Controllers\OlxController::class, 'connect']);
+            });
+
+            Route::apiResource('/listing-platforms', \App\Http\Controllers\ListingPlatformController::class);
+
         });
 
         Route::post('/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');

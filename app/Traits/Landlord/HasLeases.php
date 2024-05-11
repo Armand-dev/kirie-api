@@ -77,6 +77,8 @@ trait HasLeases
      */
     public function listingPlatforms(): BelongsToMany
     {
-        return $this->belongsToMany(ListingPlatform::class, 'listing_platform_user');
+        return $this->belongsToMany(ListingPlatform::class, 'listing_platform_user')
+            ->withTimestamps()
+            ->withPivot([]);
     }
 }
