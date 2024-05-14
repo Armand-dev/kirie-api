@@ -63,9 +63,18 @@ Route::prefix('v1')->group(function() {
             Route::prefix('olx')->middleware(['has_subscription:basic,standard,premium'])->group(function () {
                 Route::get('/getOAuthUrl', [\App\Http\Controllers\OlxController::class, 'getOAuthUrl']);
                 Route::post('/connect', [\App\Http\Controllers\OlxController::class, 'connect']);
+
+                Route::get('/categories', [\App\Http\Controllers\OlxController::class, 'getCategories']);
+                Route::get('/category/{platformCategoryId}/attributes', [\App\Http\Controllers\OlxController::class, 'getCategoryAttributes']);
             });
 
-            Route::apiResource('/listing-platforms', \App\Http\Controllers\ListingPlatformController::class);
+            /** Listings platform */
+            Route::apiResource('/listing-platforms', \App\Http\Controllers\ListingPlatformController::class)
+                ->middleware('has_subscription:basic,standard,premium');
+
+            /** Listing */
+            Route::apiResource('/listing', \App\Http\Controllers\ListingController::class)
+                ->middleware('has_subscription:basic,standard,premium');
 
         });
 

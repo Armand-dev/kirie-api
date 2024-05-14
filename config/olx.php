@@ -17,8 +17,9 @@ return [
         "oAuth2" => "/oauth/authorize",
 
         "getCategories" => "/api/partner/categories",
+        "getCategoryAttributes" => "/api/partner/categories/{category}/attributes",
 
-        "postListing" => "",
+        "postListing" => "/api/partner/adverts",
         "updateListing" => "",
         "deleteListing" => "",
     ]

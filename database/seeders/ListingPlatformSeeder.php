@@ -19,7 +19,7 @@ class ListingPlatformSeeder extends Seeder
             'id' => 1
         ], [
             'name' => 'OlxRO',
-            'logo_url' => 'path/to/logo.jpg'
+            'logo_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/OLX_green_logo.svg/1200px-OLX_green_logo.svg.png'
         ]);
     }
 }

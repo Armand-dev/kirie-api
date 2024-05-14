@@ -13,6 +13,24 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Landlord\Property::class);
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\ListingPlatform::class);
+            $table->string('platform_id')->nullable();
+            $table->string('platform_category_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('url')->nullable();
+            $table->dateTime('valid_to')->nullable();
+            $table->string('title');
+            $table->text('description');
+            $table->float('price');
+            $table->string('currency');
+            $table->boolean('negotiable');
+            $table->json('attributes');
+            $table->json('images');
+            $table->integer('views')->default(0);
+            $table->integer('phone_views')->default(0);
+            $table->integer('user_views')->default(0);
             $table->timestamps();
         });
     }

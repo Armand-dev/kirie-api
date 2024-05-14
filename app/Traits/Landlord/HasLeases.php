@@ -9,6 +9,7 @@ use App\Models\Landlord\LeaseTemplate;
 use App\Models\Landlord\Property;
 use App\Models\Landlord\Tenant;
 use App\Models\Landlord\Transaction;
+use App\Models\Landlord\Listing;
 use App\Models\ListingPlatform;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -79,6 +80,16 @@ trait HasLeases
     {
         return $this->belongsToMany(ListingPlatform::class, 'listing_platform_user')
             ->withTimestamps()
-            ->withPivot([]);
+            ->withPivot(['access_token']);
+    }
+
+    /**
+     * Get the listings associated with the user.
+     *
+     * @return HasMany<Listing>
+     */
+    public function listings(): HasMany
+    {
+        return $this->hasMany(Listing::class);
     }
 }
