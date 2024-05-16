@@ -124,15 +124,40 @@ class OlxListingService extends AbstractListingService implements ListingService
                         ])
                         ->get($this->makeUrl(method: 'getCategories'));
 
-        foreach ($response->json('data') as $category) {
-            if ($category['parent_id'] == $this->config['real_estate_parent_category_id']) {
-                OlxCategory::updateOrCreate([
-                    'platform_id' => $category['id'],
-                ],[
-                    'name' => $category['name'],
-                ]);
+        $responseData = $response->json('data');
 
-                $this->getCategoryAttributes($category['id']);
+        foreach ($responseData as $category) {
+
+            if ($category['parent_id'] == $this->config['real_estate_parent_category_id'] && ! in_array($category['id'], $this->config['exclude_category_ids'])) {
+                // Get children of Real estate category
+
+
+                if (! $category['is_leaf']) {
+                    // If category is not leaf, save duplicates with subcategories concatenated in the name
+                    foreach ($responseData as $subcategory) {
+                        if ($subcategory['parent_id'] == $category['id']  && ! in_array($subcategory['id'], $this->config['exclude_category_ids'])) {
+                            // Get children of category
+                            OlxCategory::updateOrCreate([
+                                'platform_id' => $subcategory['id'],
+                            ], [
+                                'name' => $category['name'] . ' > ' . $subcategory['name'],
+                            ]);
+
+                            $this->getCategoryAttributes($subcategory['id']);
+                        }
+                    }
+                } else {
+                    // If category is leaf save it
+                    OlxCategory::updateOrCreate([
+                        'platform_id' => $category['id'],
+                    ],[
+                        'name' => $category['name'],
+                    ]);
+
+                    $this->getCategoryAttributes($category['id']);
+
+                }
+
             }
         }
     }
@@ -180,10 +205,10 @@ class OlxListingService extends AbstractListingService implements ListingService
      * @return Listing The created listing object.
      * @throws \Exception If there is an error creating the listing.
      */
-    public function postListing(OlxListingDTO $listingDTO): Listing
+    public function postListing(User $user, OlxListingDTO $listingDTO): Listing
     {
         // Get & set user access token
-        $connection = auth()->user()->listingPlatforms()->where('listing_platform_id', ListingPlatform::OLX)->first();
+        $connection = $user->listingPlatforms()->where('listing_platform_id', ListingPlatform::OLX)->firstOrFail();
         $this->token = $connection->pivot->access_token;
 
         // Prepare payload
@@ -215,11 +240,11 @@ class OlxListingService extends AbstractListingService implements ListingService
                 'url' => $image->url,
             ];
         }
-// TODO: they dont see the google maps link as a valid URL, save it locally
-//        $images[] = [
-//            'url' => $listingDTO->property->map_image // Add map image at the end
-//        ];
+        $images[] = [
+            'url' => $listingDTO->property->map_image // Add map image at the end
+        ];
         $payload['images'] = $images;
+        Log::info(json_encode($payload));
         // Add attributes
         $payload['attributes'] = [];
         foreach ($listingDTO->attributes as $attribute => $value) {
@@ -257,11 +282,13 @@ class OlxListingService extends AbstractListingService implements ListingService
             return tap($listing)->update([
                 'platform_id' => $responseData['id'],
                 'status' => $responseData['status'],
+                'status_info' => $this->getStatusDescription($responseData['status']),
+                'status_css_class' => $this->getStatusCssClass($responseData['status']),
                 'url' => $responseData['url'],
                 'valid_to' => $responseData['valid_to'],
             ]);
         } else {
-            Log::channel('listings')->error(json_encode($response), $payload);
+            Log::channel('listings')->error(json_encode($response->json()), $payload);
             OlxError::create([
                 'listing_id' => $listing->id,
                 'user_id' => $listingDTO->user->id,
@@ -281,9 +308,172 @@ class OlxListingService extends AbstractListingService implements ListingService
         // TODO: Implement updateListing() method.
     }
 
-    public function deleteListing()
+    /**
+     * Deletes a listing from the OLX platform.
+     *
+     * @param User $user The user who owns the listing.
+     * @param Listing $listing The listing to be deleted.
+     * @throws \Exception If there is an error deleting the listing.
+     */
+    public function deleteListing(User $user, Listing $listing): void
     {
-        // TODO: Implement deleteListing() method.
+        // Get & set user access token
+        $connection = $user->listingPlatforms()->where('listing_platform_id', ListingPlatform::OLX)->firstOrFail();
+        $this->token = $connection->pivot->access_token;
+        $url = $this->makeUrl(method: 'deleteListing', replace: ['{advertId}' => $listing->platform_id]);
+
+        // Must first deactivate the listing
+        if ($listing->status === 'active') {
+            $deactivateUrl = $this->makeUrl(method: 'takeActionOnListing', replace: ['{advertId}' => $listing->platform_id]);
+
+            $response = Http::withToken($this->token)
+                ->withHeaders([
+                    'Version' => '2.0'
+                ])
+                ->post($deactivateUrl);
+
+            if ($response->ok()) {
+
+                $removedStatus = 'removed_by_user';
+
+                $listing->update([
+                    'status' => $removedStatus,
+                    'status_info' => $this->getStatusDescription($removedStatus),
+                    'status_css_class' => $this->getStatusCssClass($removedStatus),
+                ]);
+            } else {
+                Log::channel('listings')->error(json_encode($response->json()));
+                OlxError::create([
+                    'listing_id' => $listing->id,
+                    'user_id' => $listing->user_id,
+                    'property_id' => $listing->property_id,
+                    'method' => 'GET',
+                    'url' => $url,
+                    'response' => $response->json(),
+                    'response_status' => $response->status(),
+                ]);
+                throw new \Exception(json_encode($response['error']));
+            }
+        }
+
+        $response = Http::withToken($this->token)
+            ->withHeaders([
+                'Version' => '2.0'
+            ])
+            ->delete($url);
+
+        if ($response->status() == 204) {
+
+            $removedStatus = 'removed_by_user';
+
+            $listing->update([
+                'status' => $removedStatus,
+                'status_info' => $this->getStatusDescription($removedStatus),
+                'status_css_class' => $this->getStatusCssClass($removedStatus),
+            ]);
+        } else {
+            Log::channel('listings')->error(json_encode($response->json()));
+            OlxError::create([
+                'listing_id' => $listing->id,
+                'user_id' => $listing->user_id,
+                'property_id' => $listing->property_id,
+                'method' => 'GET',
+                'url' => $url,
+                'response' => $response->json(),
+                'response_status' => $response->status(),
+            ]);
+            throw new \Exception(json_encode($response['error']));
+        }
+    }
+
+    private function getStatusDescription(string $status): string
+    {
+        return $this->config['statuses'][$status]['info'] ?? '';
+    }
+
+    private function getStatusCssClass(string $status): string
+    {
+        return $this->config['statuses'][$status]['css_class'] ?? '';
+    }
+
+    public function fetchStats(User $user, Listing $listing): void
+    {
+        // Get & set user access token
+        $connection = $user->listingPlatforms()->where('listing_platform_id', ListingPlatform::OLX)->firstOrFail();
+        $this->token = $connection->pivot->access_token;
+        $url = $this->makeUrl(method: 'fetchStats', replace: ['{advertId}' => $listing->platform_id]);
+
+        $response = Http::withToken($this->token)
+                ->withHeaders([
+                    'Version' => '2.0'
+                ])
+                ->get($url);
+
+        if ($response->ok()) {
+            $responseData = $response['data'];
+
+            $listing->update([
+                'views' => $responseData['advert_views'],
+                'phone_views' => $responseData['phone_views'],
+                'user_views' => $responseData['users_observing'],
+            ]);
+        } else {
+            Log::channel('listings')->error(json_encode($response->json()));
+            OlxError::create([
+                'listing_id' => $listing->id,
+                'user_id' => $listing->user_id,
+                'property_id' => $listing->property_id,
+                'method' => 'GET',
+                'url' => $url,
+                'response' => $response->json(),
+                'response_status' => $response->status(),
+            ]);
+            throw new \Exception(json_encode($response['error']));
+        }
+    }
+
+    /**
+     * Fetches the listing data from the OLX platform and updates the corresponding listing record.
+     *
+     * @param User $user The user object associated with the listing.
+     * @param Listing $listing The listing object to fetch data for.
+     * @throws \Exception If the request to the OLX platform fails.
+     */
+    public function fetchListing(User $user, Listing $listing): void
+    {
+        // Get & set user access token
+        $connection = $user->listingPlatforms()->where('listing_platform_id', ListingPlatform::OLX)->firstOrFail();
+        $this->token = $connection->pivot->access_token;
+        $url = $this->makeUrl(method: 'fetchListing', replace: ['{advertId}' => $listing->platform_id]);
+
+        $response = Http::withToken($this->token)
+            ->withHeaders([
+                'Version' => '2.0'
+            ])
+            ->get($url);
+
+        if ($response->ok()) {
+            $responseData = $response['data'];
+
+            $listing->update([
+                'status' => $responseData['status'],
+                'status_info' => $this->getStatusDescription($responseData['status']),
+                'status_css_class' => $this->getStatusCssClass($responseData['status']),
+                'valid_to' => $responseData['valid_to'],
+            ]);
+        } else {
+            Log::channel('listings')->error(json_encode($response->json()));
+            OlxError::create([
+                'listing_id' => $listing->id,
+                'user_id' => $listing->user_id,
+                'property_id' => $listing->property_id,
+                'method' => 'GET',
+                'url' => $url,
+                'response' => $response->json(),
+                'response_status' => $response->status(),
+            ]);
+            throw new \Exception(json_encode($response['error']));
+        }
     }
 
 }

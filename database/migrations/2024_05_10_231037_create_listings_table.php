@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('platform_id')->nullable();
             $table->string('platform_category_id')->nullable();
             $table->string('status')->nullable();
+            $table->string('status_info')->nullable();
+            $table->string('status_css_class')->nullable();
             $table->string('url')->nullable();
             $table->dateTime('valid_to')->nullable();
             $table->string('title');

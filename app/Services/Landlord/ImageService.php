@@ -38,6 +38,11 @@ class ImageService
      */
     public function saveToStorage(UploadedFile $file): string|bool
     {
-        return Storage::put('images', $file);
+        $path = Storage::disk('spaces')->put('images', $file);
+        if ($path) {
+            return Storage::disk('spaces')->url($path);
+        } else {
+            return false;
+        }
     }
 }

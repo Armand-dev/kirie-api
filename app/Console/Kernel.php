@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\FetchOlxListings;
+use App\Jobs\FetchOlxListingStats;
 use App\Jobs\GetListingServicesCategoriesJob;
 use App\Jobs\RentTransactionJob;
 use Illuminate\Console\Scheduling\Schedule;
@@ -14,9 +16,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
          $schedule->job(new RentTransactionJob())->dailyAt('5:00');
-         $schedule->job(new GetListingServicesCategoriesJob())->weeklyOn(1, '00:00');
+//         $schedule->job(new GetListingServicesCategoriesJob())->weeklyOn(1, '00:00'); KEEP DISABLED
+
+        /** OLX Jobs */
+        $schedule->job(new FetchOlxListingStats())->hourly();
+        $schedule->job(new FetchOlxListings())->hourly();
+
+        /** ... */
     }
 
     /**

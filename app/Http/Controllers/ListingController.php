@@ -7,6 +7,7 @@ use App\Factories\ListingServiceFactory;
 use App\Http\Requests\Landlord\OlxListingRequest;
 use App\Http\Resources\Landlord\ListingResource;
 use App\Models\Landlord\Listing;
+use App\Services\Landlord\OlxListingService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class ListingController extends Controller
     {
         $service = ListingServiceFactory::getInstance();
         try {
-            $listing = $service->postListing(OlxListingDTO::fromApiRequest($request));
+            $listing = $service->postListing(auth()->user(), OlxListingDTO::fromApiRequest($request));
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,
@@ -82,7 +83,16 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing): JsonResponse
     {
-        $listing->delete();
+        $service = new OlxListingService();
+
+        try {
+            $service->deleteListing(auth()->user(), $listing);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'data' => $exception->getMessage()
+            ], 401);
+        }
 
         return response()->json([
             'success' => true,
