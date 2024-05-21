@@ -32,7 +32,12 @@ class EquipmentResource extends JsonResource
             'description' => $this->description,
             'thumbnail_url' => Storage::url($this->thumbnail_url),
             'category' => $this->category->name,
+            'category_id' => $this->equipment_category_id,
             'subcategory' => $this->subcategory->name,
+            'subcategory_id' => $this->equipment_subcategory_id,
+            'property_id' => $this->property_id,
+
+            'property' => PropertyResource::make($this->whenLoaded('property'))
         ];
     }
 }

@@ -56,6 +56,9 @@ Route::prefix('v1')->group(function() {
                 ->middleware('has_subscription:basic,standard,premium');
 
             /** Equipment */
+            Route::prefix('equipment')->middleware('has_subscription:basic,standard,premium')->group(function () {
+                Route::get('/categories', [\App\Http\Controllers\Landlord\EquipmentController::class, 'getCategories']);
+            });
             Route::apiResource('/equipment', \App\Http\Controllers\Landlord\EquipmentController::class)
                 ->middleware('has_subscription:basic,standard,premium');
 

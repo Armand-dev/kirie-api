@@ -74,5 +74,6 @@ return [
             'info' => 'removed by moderator',
             'css_class' => 'bg-red-50 text-red-700 ring-red-600/20'
         ],
-    ]
+    ],
+    "description_ending" => "\n\r \n\r Anunt generat de kirie.ro - platforma proprietarilor moderni."
 ];

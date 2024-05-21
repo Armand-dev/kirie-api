@@ -43,7 +43,7 @@ class PropertyResource extends JsonResource
             'images' => ImageResource::collection($this->whenLoaded('images')),
             'thumbnail' => ImageResource::collection($this->whenLoaded('thumbnail')),
             'equipment' => EquipmentResource::collection($this->whenLoaded('equipment')),
-            'activeListings' => ListingResource::collection($this->activeListings),
+            'activeListings' => ListingResource::collection($this->whenLoaded('activeListings')),
         ];
     }
 }

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Landlord;
 use App\DataTransferObjects\Landlord\EquipmentDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Landlord\EquipmentRequest;
+use App\Http\Resources\Landlord\EquipmentCategoryResource;
 use App\Http\Resources\Landlord\EquipmentResource;
 use App\Models\Landlord\Equipment;
+use App\Models\Landlord\EquipmentCategory;
+use App\Models\Landlord\Property;
 use App\Services\Landlord\ImageService;
 use App\Services\Landlord\PropertyService;
 use Illuminate\Http\JsonResponse;
@@ -23,11 +26,17 @@ class EquipmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+        if ($propertyId = $request->query('property')) {
+            $collection = Property::findOrFail($propertyId)->equipment;
+        } else {
+            $collection = auth()->user()->equipment;
+        }
+
         return response()->json([
             'success' => true,
-            'data' => EquipmentResource::collection(auth()->user()->equipment)
+            'data' => EquipmentResource::collection($collection)
         ]);
     }
 
@@ -78,6 +87,14 @@ class EquipmentController extends Controller
         return response()->json([
             'success' => true,
             'data' => "Successfully deleted equipment."
+        ]);
+    }
+
+    public function getCategories(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => EquipmentCategoryResource::collection(EquipmentCategory::all()->load('subcategories'))
         ]);
     }
 }
