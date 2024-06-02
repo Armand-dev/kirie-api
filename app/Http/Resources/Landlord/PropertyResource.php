@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Landlord;
 
 use App\Models\Landlord\Property;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,12 +39,15 @@ class PropertyResource extends JsonResource
             'map_image' => $this->map_image,
             'street_view_image' => $this->street_view_image,
             'active_lease' => LeaseResource::collection($this->whenLoaded('activeLease')),
-            'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
+            'transactions' => TransactionResource::collection($this->whenLoaded('transactions', $this->transactions, collect()))->groupBy(function ($item) {
+                return Carbon::parse($item->date)->format('Y-m-d');
+            }),
             'documents' => DocumentResource::collection($this->whenLoaded('documents')),
             'images' => ImageResource::collection($this->whenLoaded('images')),
             'thumbnail' => ImageResource::collection($this->whenLoaded('thumbnail')),
             'equipment' => EquipmentResource::collection($this->whenLoaded('equipment')),
-            'activeListings' => ListingResource::collection($this->whenLoaded('activeListings')),
+            'active_listings' => ListingResource::collection($this->whenLoaded('activeListings')),
+            'listings' => ListingResource::collection($this->whenLoaded('listings')),
         ];
     }
 }

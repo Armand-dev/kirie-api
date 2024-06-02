@@ -5,6 +5,7 @@ namespace App\Models\Landlord;
 use App\Enums\Landlord\TransactionStatus;
 use App\Enums\Landlord\TransactionType;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,5 +48,13 @@ class Transaction extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Lease::class);
+    }
+
+    public function scopeFiltered(Builder $query): void
+    {
+        $query
+            ->when(request('property'), function (Builder $q) {
+                $q->where('property_id', request('property'));
+            });
     }
 }

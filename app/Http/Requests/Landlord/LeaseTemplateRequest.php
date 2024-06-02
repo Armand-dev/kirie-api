@@ -25,7 +25,7 @@ class LeaseTemplateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'body' => ['required', 'string'],
+            'body' => ['required', 'array'],
         ];
     }
 

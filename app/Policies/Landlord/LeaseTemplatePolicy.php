@@ -20,7 +20,7 @@ class LeaseTemplatePolicy
      */
     public function view(User $user, LeaseTemplate $leaseTemplate): bool
     {
-        return $user->id == $leaseTemplate->user_id;
+        return $user->id == $leaseTemplate->user_id || $leaseTemplate->global;
     }
 
     /**
